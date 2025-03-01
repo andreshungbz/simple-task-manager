@@ -62,7 +62,7 @@ taskRoutes.post('/toggle-task/:id', (req, res) => {
 
   const task = tasks.find((t) => t.id === taskID);
 
-  // handle non-existend task
+  // handle non-existent task
   if (!task) {
     return res.render('error', {
       title: 'Error: Non-existent Task',
