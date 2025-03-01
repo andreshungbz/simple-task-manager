@@ -12,7 +12,19 @@ let id = exampleData.length + 1;
 // general routes
 
 taskRoutes.get('/', (req, res) => {
-  res.render('index', { tasks: tasks });
+  let renderedTasks = [...tasks];
+
+  if (req.query.search) {
+    renderedTasks = renderedTasks.filter((t) => {
+      const query = req.query.search.toLowerCase();
+      const title = t.title.toLowerCase();
+      const description = t.description.toLowerCase();
+
+      return title.includes(query) || description.includes(query);
+    });
+  }
+
+  res.render('index', { tasks: renderedTasks });
 });
 
 taskRoutes.get('/usage', (req, res) => {

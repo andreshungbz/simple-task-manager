@@ -172,6 +172,21 @@ main {
   gap: 10px;
 }
 
+/* EXTRA */
+
+#search-task-form {
+  display: flex;
+  gap: 5px;
+}
+
+#search-task-form input {
+  flex: 3;
+}
+
+#search-task-form {
+  flex: 1;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 600px) {
@@ -188,5 +203,9 @@ main {
   .name-input,
   .desc-input {
     gap: 5px;
+  }
+
+  #search-task-form {
+    flex-direction: column;
   }
 }
