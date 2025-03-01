@@ -1,7 +1,5 @@
-<!--
-Filename: index.ejs
-main page for web application
--->
+<!-- Filename: index.ejs
+main page for web application -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,62 +11,12 @@ main page for web application
   </head>
   <body>
     <div class="app">
-      <header>
-        <a href="/"><h1>Simple Task Management</h1></a>
-        <nav>
-          <a href="/usage">Usage</a>
-          <a href="/about">About</a>
-        </nav>
-      </header>
+      <%- include('partials/header') %>
       <main>
-        <section class="formSection">
-          <form id="add-task-form" method="POST" action="/add-task">
-            <div class="text-input-section">
-              <div class="name-input">
-                <label for="task-title">Task Name:</label>
-                <input type="text" id="task-title" name="task-title" required />
-              </div>
-              <div class="desc-input">
-                <label for="task-description">Description:</label>
-                <textarea
-                  id="task-description"
-                  name="task-description"
-                ></textarea>
-              </div>
-            </div>
-            <button type="submit">Add Task</button>
-          </form>
-        </section>
-        <section class="tasksSection">
-          <ul>
-            <% tasks.forEach(task => { %>
-            <li <% if (task.completed) { %>
-              class="completed"<% } %>>
-              <h2><%= task.title %></h2>
-              <p><%= task.description %></p>
-              <div class="taskOperations">
-                <form method="POST" action="/toggle-task/<%= task.id %>">
-                  <button type="submit">
-                    <% if (!task.completed) { %> Complete <% } else { %> Undo
-                    Complete <% } %>
-                  </button>
-                </form>
-                <form method="POST" action="/delete-task/<%= task.id %>">
-                  <button type="submit">Delete</button>
-                </form>
-              </div>
-            </li>
-            <% }) %>
-          </ul>
-        </section>
+        <%- include('partials/add-task-form') %> <%-
+        include('partials/tasks-list') %>
       </main>
-      <footer>
-        Coded by
-        <a href="https://github.com/andreshungbz" target="_blank"
-          >Andres Hung</a
-        >
-        | CMPS2212 GUI
-      </footer>
+      <%- include('partials/footer') %>
     </div>
   </body>
 </html>

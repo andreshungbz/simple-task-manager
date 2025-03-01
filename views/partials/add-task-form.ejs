@@ -1,0 +1,18 @@
+<!-- Filename: add-task-form.ejs
+partial for form that adds a task -->
+
+<section class="formSection">
+  <form id="add-task-form" method="POST" action="/add-task">
+    <div class="text-input-section">
+      <div class="name-input">
+        <label for="task-title">Task Name:</label>
+        <input type="text" id="task-title" name="task-title" required />
+      </div>
+      <div class="desc-input">
+        <label for="task-description">Description:</label>
+        <textarea id="task-description" name="task-description"></textarea>
+      </div>
+    </div>
+    <button type="submit">Add Task</button>
+  </form>
+</section>

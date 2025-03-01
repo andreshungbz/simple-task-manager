@@ -1,0 +1,25 @@
+<!-- Filename: tasks-list.ejs
+partial that renders the list of tasks -->
+
+<section class="tasksSection">
+  <ul>
+    <% tasks.forEach(task => { %>
+    <li <% if (task.completed) { %>
+      class="completed"<% } %>>
+      <h2><%= task.title %></h2>
+      <p><%= task.description %></p>
+      <div class="taskOperations">
+        <form method="POST" action="/toggle-task/<%= task.id %>">
+          <button type="submit">
+            <% if (!task.completed) { %> Complete <% } else { %> Undo Complete
+            <% } %>
+          </button>
+        </form>
+        <form method="POST" action="/delete-task/<%= task.id %>">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </li>
+    <% }) %>
+  </ul>
+</section>
