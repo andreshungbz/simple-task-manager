@@ -13,18 +13,24 @@ let id = exampleData.length + 1;
 
 taskRoutes.get('/', (req, res) => {
   let renderedTasks = [...tasks];
+  const search = req.query.search || '';
 
-  if (req.query.search) {
+  if (search) {
     renderedTasks = renderedTasks.filter((t) => {
-      const query = req.query.search.toLowerCase();
+      const text = search.toLowerCase();
       const title = t.title.toLowerCase();
       const description = t.description.toLowerCase();
 
-      return title.includes(query) || description.includes(query);
+      return title.includes(text) || description.includes(text);
     });
   }
 
-  res.render('index', { tasks: renderedTasks });
+  res.render('index', {
+    tasks: renderedTasks,
+    filter: {
+      search,
+    },
+  });
 });
 
 taskRoutes.get('/usage', (req, res) => {
@@ -85,7 +91,8 @@ taskRoutes.post('/toggle-task/:id', (req, res) => {
   task.completed = !task.completed;
   tasks.sort(taskSorter);
 
-  res.redirect('/');
+  const referer = req.get('Referer');
+  res.redirect(referer || '/');
 });
 
 // delete task
@@ -112,7 +119,8 @@ taskRoutes.post('/delete-task/:id', (req, res) => {
 
   tasks.splice(taskIndex, 1);
 
-  res.redirect('/');
+  const referer = req.get('Referer');
+  res.redirect(referer || '/');
 });
 
 export default taskRoutes;
