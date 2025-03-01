@@ -3,6 +3,7 @@
 
 import express from 'express';
 import exampleData from '../public/example-data.js';
+import taskSorter from '../utils/taskSorter.js';
 
 const taskRoutes = express.Router();
 const tasks = [...exampleData];
@@ -24,6 +25,7 @@ taskRoutes.get('/about', (req, res) => {
 
 // task operations
 
+// add task
 taskRoutes.post('/add-task', (req, res) => {
   const { taskTitle, taskDescription } = req.body;
 
@@ -46,6 +48,7 @@ taskRoutes.post('/add-task', (req, res) => {
   res.redirect('/');
 });
 
+// toggle task completion
 taskRoutes.post('/toggle-task/:id', (req, res) => {
   const taskID = Number(req.params.id);
 
@@ -68,15 +71,7 @@ taskRoutes.post('/toggle-task/:id', (req, res) => {
   }
 
   task.completed = !task.completed;
-  tasks.sort((t1, t2) => {
-    if (t1.completed && !t2.completed) {
-      return 1;
-    } else if (!t1.completed && t2.completed) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
+  tasks.sort(taskSorter);
 
   res.redirect('/');
 });
