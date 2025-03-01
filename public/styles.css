@@ -159,6 +159,19 @@ main {
   padding: 0 10px;
 }
 
+/* OTHER */
+
+.message {
+  background-color: white;
+  padding: 10px;
+  border: 2px solid var(--blue-4);
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 600px) {

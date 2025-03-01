@@ -1,5 +1,5 @@
-<!-- Filename: index.ejs
-main page for web application -->
+<!-- Filename: error.ejs
+customizable error page -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,14 +7,16 @@ main page for web application -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles.css" rel="stylesheet" />
-    <title>Simple Task Management</title>
+    <title><%= title %> | <%= description %></title>
   </head>
   <body>
     <div class="app">
       <%- include('partials/header') %>
       <main>
-        <%- include('partials/add-task-form') %> <%-
-        include('partials/tasks-list') %>
+        <div class="message">
+          <h2><%= title %></h2>
+          <p><%= description %></p>
+        </div>
       </main>
       <%- include('partials/footer') %>
     </div>
