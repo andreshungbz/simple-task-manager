@@ -13,6 +13,9 @@ const PORT = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(process.cwd(), 'views'));
 
+// static folder
+app.use(express.static(path.join(process.cwd(), 'public')));
+
 // middleware to parse HTML form data
 app.use(express.urlencoded({ extended: true }));
 // log HTTP request details
