@@ -3,6 +3,8 @@
 
 import express from 'express';
 import path from 'path';
+import logger from './middleware/logger.js';
+import missingRoute from './middleware/missingRoute.js';
 
 const app = express();
 const PORT = 3000;
@@ -11,10 +13,18 @@ const PORT = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(process.cwd(), 'views'));
 
+// middleware to parse HTML form data
+app.use(express.urlencoded({ extended: true }));
+// log HTTP request details
+app.use(logger);
+
 // routes
 app.get('/', (req, res) => {
   res.send('Simple Task Management');
 });
+
+// handle non-existent routes
+app.use(missingRoute);
 
 // start server
 app.listen(PORT, () => {
