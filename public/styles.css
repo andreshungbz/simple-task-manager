@@ -3,7 +3,177 @@ Filename: styles.css
 global styles
 */
 
+/* color palette: https://coolors.co/palette/0d1b2a-1b263b-415a77-778da9-e0e1dd */
+
+/* VARIABLES */
+:root {
+  --blue-light: #d8e5f5;
+  --blue-1: #778da9;
+  --blue-2: #415a77;
+  --blue-3: #1b263b;
+  --blue-4: #0d1b2a;
+  --beige: #e0e1dd;
+}
+
+/* BODY */
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  background-color: var(--blue-3);
   font-family: Arial, sans-serif;
+  color: var(--blue-4);
+}
+
+.app {
+  box-shadow: -5px 5px var(--blue-1);
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 15px;
+  background-color: var(--beige);
+  border-radius: 5px;
+}
+
+/* COMMON */
+
+header,
+main,
+footer {
+  padding: 10px 0;
+}
+
+header,
+footer {
+  text-align: center;
+}
+
+/* HEADER */
+
+header h1 {
+  text-transform: uppercase;
+}
+
+header a {
+  color: var(--blue-3);
+  text-decoration: none;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+header nav a {
+  padding: 5px 10px;
+  background-color: var(--blue-1);
+  border-radius: 5px;
+  color: white;
+}
+
+header nav a:hover {
+  background-color: var(--blue-2);
+}
+
+/* MAIN */
+
+main {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/* FORM */
+
+.formSection {
+  background-color: white;
+  padding: 10px;
+  border: 2px solid var(--blue-4);
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+#add-task-form {
+  display: flex;
+  gap: 5px;
+}
+
+.text-input-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formSection button {
+  display: block;
+  flex: 1;
+}
+
+.name-input,
+.desc-input {
+  display: flex;
+  gap: 10px;
+}
+
+.name-input input,
+.desc-input textarea {
+  flex: 1;
+}
+
+.desc-input textarea {
+  height: 75px;
+  resize: vertical;
+}
+
+/* TASKS */
+
+.tasksSection li {
+  background-color: white;
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid var(--blue-2);
+  border-radius: 5px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.tasksSection .completed {
+  background-color: rgb(166, 166, 166);
+  color: lightgray;
+  border: none;
+}
+
+.tasksSection .taskOperations {
+  display: flex;
+  gap: 10px;
+}
+
+.tasksSection .taskOperations form button {
+  padding: 0 10px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 600px) {
+  .app {
+    margin: 25px 15px;
+  }
+
+  #add-task-form,
+  .name-input,
+  .desc-input {
+    flex-direction: column;
+  }
+
+  .name-input,
+  .desc-input {
+    gap: 5px;
+  }
 }
