@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import logger from './middleware/logger.js';
 import missingRoute from './middleware/missingRoute.js';
+import taskRoutes from './routes/taskRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -22,9 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 // routes
-app.get('/', (req, res) => {
-  res.render('index');
-});
+app.use('/', taskRoutes);
 
 // handle non-existent routes
 app.use(missingRoute);
