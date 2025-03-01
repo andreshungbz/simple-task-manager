@@ -23,7 +23,7 @@ app.use(logger);
 
 // routes
 app.get('/', (req, res) => {
-  res.send('Simple Task Management');
+  res.render('index');
 });
 
 // handle non-existent routes
