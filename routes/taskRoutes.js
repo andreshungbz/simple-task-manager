@@ -76,4 +76,31 @@ taskRoutes.post('/toggle-task/:id', (req, res) => {
   res.redirect('/');
 });
 
+// delete task
+taskRoutes.post('/delete-task/:id', (req, res) => {
+  const taskID = Number(req.params.id);
+
+  // handle non-numerical ID
+  if (isNaN(taskID)) {
+    return res.render('error', {
+      title: 'Error: Non-numerical ID',
+      description: 'Task ID should be a number. Task not processed.',
+    });
+  }
+
+  const taskIndex = tasks.findIndex((t) => t.id === taskID);
+
+  // handle non-existent task
+  if (taskIndex === -1) {
+    return res.render('error', {
+      title: 'Error: Non-existent Task',
+      description: 'Task does not exist in list. Task not processed.',
+    });
+  }
+
+  tasks.splice(taskIndex, 1);
+
+  res.redirect('/');
+});
+
 export default taskRoutes;
