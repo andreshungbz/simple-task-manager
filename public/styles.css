@@ -1,3 +1,9 @@
+/*
+Filename: styles.css
+global styles
+*/
+
 * {
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
