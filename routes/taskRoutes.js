@@ -5,8 +5,8 @@ import express from 'express';
 import exampleData from '../public/example-data.js';
 
 const taskRoutes = express.Router();
-const tasks = [];
-let id = 1;
+const tasks = [...exampleData];
+let id = exampleData.length + 1;
 
 // general routes
 
@@ -41,6 +41,41 @@ taskRoutes.post('/add-task', (req, res) => {
     title: taskTitle,
     description: taskDescription,
     completed: false,
+  });
+
+  res.redirect('/');
+});
+
+taskRoutes.post('/toggle-task/:id', (req, res) => {
+  const taskID = Number(req.params.id);
+
+  // handle non-numerical ID
+  if (isNaN(taskID)) {
+    return res.render('error', {
+      title: 'Error: Non-numerical ID',
+      description: 'Task ID should be a number. Task not processed.',
+    });
+  }
+
+  const task = tasks.find((t) => t.id === taskID);
+
+  // handle non-existend task
+  if (!task) {
+    return res.render('error', {
+      title: 'Error: Non-existent Task',
+      description: 'Task does not exist in list. Task not processed.',
+    });
+  }
+
+  task.completed = !task.completed;
+  tasks.sort((t1, t2) => {
+    if (t1.completed && !t2.completed) {
+      return 1;
+    } else if (!t1.completed && t2.completed) {
+      return -1;
+    } else {
+      return 0;
+    }
   });
 
   res.redirect('/');
