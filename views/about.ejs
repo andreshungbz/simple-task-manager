@@ -1,0 +1,32 @@
+<!-- Filename: about.ejs
+view for application information -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/styles.css" rel="stylesheet" />
+    <title>About</title>
+  </head>
+  <body>
+    <div class="app">
+      <%- include('partials/header') %>
+      <main>
+        <div class="message">
+          <h2>About</h2>
+          <p>
+            This web application was created by
+            <a href="https://github.com/andreshungbz" target="_blank"
+              >Andres Hung</a
+            >
+            for the University of Belize CMPS2212 GUI course in the 2024-2
+            semester. It was written using Node.js, Express.js and EJS
+            templating.
+          </p>
+        </div>
+      </main>
+      <%- include('partials/footer') %>
+    </div>
+  </body>
+</html>

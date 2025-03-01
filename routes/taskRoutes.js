@@ -14,4 +14,8 @@ taskRoutes.get('/usage', (req, res) => {
   res.render('usage');
 });
 
+taskRoutes.get('/about', (req, res) => {
+  res.render('about');
+});
+
 export default taskRoutes;
