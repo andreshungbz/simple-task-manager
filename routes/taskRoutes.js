@@ -10,4 +10,8 @@ taskRoutes.get('/', (req, res) => {
   res.render('index', { tasks: exampleData });
 });
 
+taskRoutes.get('/usage', (req, res) => {
+  res.render('usage');
+});
+
 export default taskRoutes;
