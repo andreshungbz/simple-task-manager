@@ -1,0 +1,13 @@
+<!-- Filename: categorize-task-form.ejs
+partial for form that filters tasks by category -->
+
+<section class="formSection">
+  <div id="categorize-task-form">
+    <select name="category">
+      <option value="all" <%= filter.category === 'all' ? 'selected' : '' %>>All</option>
+      <option value="completed" <%= filter.category === 'completed' ? 'selected' : '' %>>Completed</option>
+      <option value="incomplete" <%= filter.category === 'incomplete' ? 'selected' : '' %>>Incomplete</option>
+    </select>
+    <button type="submit">Filter Category</button>
+  </div>
+</section>

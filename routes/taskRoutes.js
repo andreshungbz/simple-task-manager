@@ -14,6 +14,7 @@ let id = exampleData.length + 1;
 taskRoutes.get('/', (req, res) => {
   let renderedTasks = [...tasks];
   const search = req.query.search || '';
+  const category = req.query.category || 'all';
 
   if (search) {
     renderedTasks = renderedTasks.filter((t) => {
@@ -25,10 +26,24 @@ taskRoutes.get('/', (req, res) => {
     });
   }
 
+  if (category) {
+    renderedTasks = renderedTasks.filter((t) => {
+      switch (category) {
+        case 'completed':
+          return t.completed;
+        case 'incomplete':
+          return !t.completed;
+        default:
+          return true;
+      }
+    });
+  }
+
   res.render('index', {
     tasks: renderedTasks,
     filter: {
       search,
+      category,
     },
   });
 });
