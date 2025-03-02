@@ -43,7 +43,7 @@ styles for main add task form
 }
 
 .desc-input textarea {
-  height: 75px;
+  height: 50px;
   resize: vertical;
 }
 

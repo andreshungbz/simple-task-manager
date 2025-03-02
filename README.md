@@ -1,6 +1,6 @@
 # cmps2212-task-mgmt-app
 
-Simple Task Management Web Application for the CMPS2212 GUI
+Simple Task Manager Web Application for the CMPS2212 GUI
 
 ## Attributions
 

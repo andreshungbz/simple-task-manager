@@ -1,7 +1,7 @@
 {
   "name": "cmps2212-task-mgmt-app",
   "version": "1.0.0",
-  "description": "Simple Task Management Web Application",
+  "description": "Simple Task Manager Web Application",
   "homepage": "https://github.com/andreshungbz/cmps2212-task-mgmt-app#readme",
   "bugs": {
     "url": "https://github.com/andreshungbz/cmps2212-task-mgmt-app/issues"
