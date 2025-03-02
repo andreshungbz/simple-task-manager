@@ -95,7 +95,7 @@ main {
   padding: 10px;
   border: 2px solid var(--blue-4);
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin: 10px 0;
 }
 
 #add-task-form {

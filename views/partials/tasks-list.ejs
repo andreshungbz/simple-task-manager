@@ -6,7 +6,7 @@ partial that renders the list of tasks -->
     <% tasks.forEach(task => { %>
     <li <% if (task.completed) { %>
       class="completed"<% } %>>
-      <h2><%= task.title %></h2>
+      <h3><%= task.title %></h3>
       <p>
         Priority:
         <span

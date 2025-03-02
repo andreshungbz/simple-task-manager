@@ -6,17 +6,24 @@ import exampleData from '../public/example-data.js';
 import taskSorter from '../utils/taskSorter.js';
 
 const taskRoutes = express.Router();
+
+// store tasks in memory in an array; remove exampleData and set ID to 0 for empty initial list
 const tasks = [...exampleData];
 let id = exampleData.length + 1;
 
-// general routes
+// GENERAL ROUTES
 
+// main page
 taskRoutes.get('/', (req, res) => {
+  // create a copy of the tasks; this is fine since the reference to same object is copied
   let renderedTasks = [...tasks];
+
+  // get query parameters to use if necessary
   const search = req.query.search || '';
   const category = req.query.category || 'all';
   const priority = req.query.priority || '';
 
+  // filter by search query
   if (search) {
     renderedTasks = renderedTasks.filter((t) => {
       const text = search.toLowerCase();
@@ -27,6 +34,7 @@ taskRoutes.get('/', (req, res) => {
     });
   }
 
+  // fitler by category (completed status)
   if (category) {
     renderedTasks = renderedTasks.filter((t) => {
       switch (category) {
@@ -40,6 +48,7 @@ taskRoutes.get('/', (req, res) => {
     });
   }
 
+  // sort by priority
   if (priority) {
     const priorityOrder = { high: 1, medium: 2, low: 3 };
 
@@ -54,9 +63,11 @@ taskRoutes.get('/', (req, res) => {
       }
     });
 
+    // resort so completed tasks are always at the end
     renderedTasks.sort(taskSorter);
   }
 
+  // pass a filter object so filter input forms can pre-populate with last selection
   res.render('index', {
     tasks: renderedTasks,
     filter: {
@@ -67,15 +78,17 @@ taskRoutes.get('/', (req, res) => {
   });
 });
 
+// usage
 taskRoutes.get('/usage', (req, res) => {
   res.render('usage');
 });
 
+// about
 taskRoutes.get('/about', (req, res) => {
   res.render('about');
 });
 
-// task operations
+// TASK OPERATION ROUTES
 
 // add task
 taskRoutes.post('/add-task', (req, res) => {
@@ -98,6 +111,7 @@ taskRoutes.post('/add-task', (req, res) => {
     priority: taskPriority,
   });
 
+  // don't redirect to previous URL in case task properties don't match applied filters
   res.redirect('/');
 });
 
@@ -126,6 +140,7 @@ taskRoutes.post('/toggle-task/:id', (req, res) => {
   task.completed = !task.completed;
   tasks.sort(taskSorter);
 
+  // redirect to previous URL
   const referer = req.get('Referer');
   res.redirect(referer || '/');
 });
@@ -154,6 +169,7 @@ taskRoutes.post('/delete-task/:id', (req, res) => {
 
   tasks.splice(taskIndex, 1);
 
+  // redirect to previous URL
   const referer = req.get('Referer');
   res.redirect(referer || '/');
 });

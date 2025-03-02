@@ -13,9 +13,11 @@ main page for web application -->
     <div class="app">
       <%- include('partials/header') %>
       <main>
-        <%- include('partials/add-task-form') %> <%- include
-        ('partials/filter-form') %>
-        <hr />
+        <h2>Filters</h2>
+        <%- include ('partials/filter-form') %>
+        <h2>Add Task</h2>
+        <%- include('partials/add-task-form') %>
+        <h2>Tasks List</h2>
         <%- include('partials/tasks-list') %>
       </main>
       <%- include('partials/footer') %>
