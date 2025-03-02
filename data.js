@@ -1,4 +1,4 @@
-const exampleData = [
+const data = [
   {
     id: 1,
     title: 'Complete OOP Tables',
@@ -23,4 +23,4 @@ const exampleData = [
   },
 ];
 
-export default exampleData;
+export default data;

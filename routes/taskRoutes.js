@@ -2,14 +2,14 @@
 // routes relating to tasks and processing tasks
 
 import express from 'express';
-import exampleData from '../public/example-data.js';
+import data from '../data.js';
 import taskSorter from '../utils/taskSorter.js';
 
 const taskRoutes = express.Router();
 
 // store tasks in memory in an array; remove exampleData and set ID to 0 for empty initial list
-const tasks = [...exampleData];
-let id = exampleData.length + 1;
+const tasks = [...data];
+let id = data.length + 1;
 
 // GENERAL ROUTES
 
