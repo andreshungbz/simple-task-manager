@@ -30,7 +30,5 @@ app.use(missingRoute);
 
 // start server
 app.listen(PORT, () => {
-  console.log(
-    `Simple Task Management application running at http://localhost:${PORT}`
-  );
+  console.log(`Simple Task Management running at http://localhost:${PORT}`);
 });
