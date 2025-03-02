@@ -1,0 +1,30 @@
+/*
+Filename: filter-form.css
+styles for the extra functionality
+*/
+
+/* FILTER FORM */
+
+#search-task-input,
+#categorize-task-input,
+#priority-task-input {
+  display: flex;
+  gap: 5px;
+}
+
+#search-task-input input,
+#categorize-task-input select,
+#priority-task-input div {
+  flex: 3;
+}
+
+#search-task-input button,
+#categorize-task-input button,
+#priority-task-input button {
+  flex: 1;
+}
+
+#priority-task-input div {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,53 @@
+/*
+Filename: task.css
+styling for rendered tasks
+*/
+
+/* TASKS */
+
+.tasksSection li {
+  background-color: white;
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid var(--blue-2);
+  border-radius: 5px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.tasksSection .completed {
+  background-color: rgb(166, 166, 166);
+  color: lightgray;
+  border: none;
+}
+
+.tasksSection .taskOperations {
+  display: flex;
+  gap: 10px;
+}
+
+.tasksSection .taskOperations form button {
+  padding: 0 10px;
+}
+
+.priority {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 5px;
+  color: white;
+  width: 80px;
+  text-align: center;
+}
+
+.high-priority {
+  background-color: rgb(215, 50, 50);
+}
+
+.medium-priority {
+  background-color: rgb(218, 137, 24);
+}
+
+.low-priority {
+  background-color: rgb(65, 111, 203);
+}

@@ -1,0 +1,52 @@
+/*
+Filename: form.css
+styles for main add task form
+*/
+
+/* FORM */
+
+.formSection {
+  background-color: white;
+  padding: 10px;
+  border: 2px solid var(--blue-4);
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+#add-task-form {
+  display: flex;
+  gap: 5px;
+}
+
+.text-input-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formSection button {
+  display: block;
+  flex: 1;
+}
+
+.name-input,
+.desc-input,
+.prio-input {
+  display: flex;
+  gap: 10px;
+}
+
+.name-input input,
+.desc-input textarea {
+  flex: 1;
+}
+
+.desc-input textarea {
+  height: 75px;
+  resize: vertical;
+}
+
+.prio-input {
+  gap: 50px;
+}
