@@ -6,11 +6,11 @@ styles for main add task form
 /* FORM */
 
 .formSection {
-  background-color: white;
+  margin: 10px 0;
   padding: 10px;
+  background-color: white;
   border: 2px solid var(--blue-4);
   border-radius: 5px;
-  margin: 10px 0;
 }
 
 #add-task-form {
@@ -19,10 +19,10 @@ styles for main add task form
 }
 
 .text-input-section {
-  flex: 3;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex: 3;
 }
 
 .formSection button {
@@ -43,8 +43,8 @@ styles for main add task form
 }
 
 .desc-input textarea {
-  height: 50px;
   resize: vertical;
+  height: 50px;
 }
 
 .prio-input {

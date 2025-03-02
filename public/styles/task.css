@@ -6,20 +6,20 @@ styling for rendered tasks
 /* TASKS */
 
 .tasksSection li {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   margin-top: 10px;
   padding: 10px;
+  background-color: white;
   border: 2px solid var(--blue-2);
   border-radius: 5px;
-  display: flex;
-  gap: 5px;
-  flex-direction: column;
 }
 
 .tasksSection .completed {
   background-color: rgb(166, 166, 166);
-  color: lightgray;
   border: none;
+  color: lightgray;
 }
 
 .tasksSection .taskOperations {
@@ -33,10 +33,10 @@ styling for rendered tasks
 
 .priority {
   display: inline-block;
+  width: 80px;
   padding: 2px 10px;
   border-radius: 5px;
   color: white;
-  width: 80px;
   text-align: center;
 }
 
