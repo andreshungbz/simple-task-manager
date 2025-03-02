@@ -2,6 +2,7 @@
 partial that groups filter inputs into one form -->
 
 <form method="GET" action="/">
-  <%- include('search-task-form') %> <%- include('categorize-task-form') %> <%-
-  include('priority-task-form') %>
+  <%- include('./filter-inputs/search-task-input') %> <%-
+  include('./filter-inputs/categorize-task-input') %> <%-
+  include('./filter-inputs/priority-task-input') %>
 </form>
