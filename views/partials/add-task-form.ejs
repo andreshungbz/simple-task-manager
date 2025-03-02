@@ -16,6 +16,20 @@ partial for form that adds a task -->
           required
         ></textarea>
       </div>
+      <div class="prio-input">
+        <label>Priority:</label>
+        <div>
+          <label>
+            <input type="radio" name="taskPriority" value="low" checked /> Low
+          </label>
+          <label>
+            <input type="radio" name="taskPriority" value="medium" /> Medium
+          </label>
+          <label>
+            <input type="radio" name="taskPriority" value="high" /> High
+          </label>
+        </div>
+      </div>
     </div>
     <button type="submit">Add Task</button>
   </form>

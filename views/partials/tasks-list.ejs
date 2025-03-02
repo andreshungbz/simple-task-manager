@@ -7,6 +7,13 @@ partial that renders the list of tasks -->
     <li <% if (task.completed) { %>
       class="completed"<% } %>>
       <h2><%= task.title %></h2>
+      <p>
+        Priority:
+        <span
+          class="priority <%= task.priority === 'high' ? 'high-priority' : task.priority === 'medium' ? 'medium-priority' : 'low-priority' %>"
+          ><%= task.priority %></span
+        >
+      </p>
       <p><%= task.description %></p>
       <div class="taskOperations">
         <form method="POST" action="/toggle-task/<%= task.id %>">

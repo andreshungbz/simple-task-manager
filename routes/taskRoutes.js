@@ -15,6 +15,7 @@ taskRoutes.get('/', (req, res) => {
   let renderedTasks = [...tasks];
   const search = req.query.search || '';
   const category = req.query.category || 'all';
+  const priority = req.query.priority || '';
 
   if (search) {
     renderedTasks = renderedTasks.filter((t) => {
@@ -39,11 +40,29 @@ taskRoutes.get('/', (req, res) => {
     });
   }
 
+  if (priority) {
+    const priorityOrder = { high: 1, medium: 2, low: 3 };
+
+    renderedTasks.sort((t1, t2) => {
+      switch (priority) {
+        case 'highToLow':
+          return priorityOrder[t1.priority] - priorityOrder[t2.priority];
+        case 'lowToHigh':
+          return priorityOrder[t2.priority] - priorityOrder[t1.priority];
+        default:
+          return 0;
+      }
+    });
+
+    renderedTasks.sort(taskSorter);
+  }
+
   res.render('index', {
     tasks: renderedTasks,
     filter: {
       search,
       category,
+      priority,
     },
   });
 });
@@ -60,7 +79,7 @@ taskRoutes.get('/about', (req, res) => {
 
 // add task
 taskRoutes.post('/add-task', (req, res) => {
-  const { taskTitle, taskDescription } = req.body;
+  const { taskTitle, taskDescription, taskPriority } = req.body;
 
   // handle missing fields
   if (!taskTitle || !taskDescription) {
@@ -76,6 +95,7 @@ taskRoutes.post('/add-task', (req, res) => {
     title: taskTitle,
     description: taskDescription,
     completed: false,
+    priority: taskPriority,
   });
 
   res.redirect('/');

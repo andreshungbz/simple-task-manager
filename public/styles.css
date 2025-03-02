@@ -116,7 +116,8 @@ main {
 }
 
 .name-input,
-.desc-input {
+.desc-input,
+.prio-input {
   display: flex;
   gap: 10px;
 }
@@ -129,6 +130,10 @@ main {
 .desc-input textarea {
   height: 75px;
   resize: vertical;
+}
+
+.prio-input {
+  gap: 50px;
 }
 
 /* TASKS */
@@ -175,19 +180,48 @@ main {
 /* EXTRA */
 
 #search-task-form,
-#categorize-task-form {
+#categorize-task-form,
+#priority-task-form {
   display: flex;
   gap: 5px;
 }
 
 #search-task-form input,
-#categorize-task-form select {
+#categorize-task-form select,
+#priority-task-form div {
   flex: 3;
 }
 
 #search-task-form button,
-#categorize-task-form button {
+#categorize-task-form button,
+#priority-task-form button {
   flex: 1;
+}
+
+#priority-task-form div {
+  display: flex;
+  gap: 10px;
+}
+
+.priority {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 5px;
+  color: white;
+  width: 80px;
+  text-align: center;
+}
+
+.high-priority {
+  background-color: rgb(215, 50, 50);
+}
+
+.medium-priority {
+  background-color: rgb(218, 137, 24);
+}
+
+.low-priority {
+  background-color: rgb(65, 111, 203);
 }
 
 /* MEDIA QUERIES */
@@ -199,17 +233,26 @@ main {
 
   #add-task-form,
   .name-input,
-  .desc-input {
+  .desc-input,
+  .prio-input {
     flex-direction: column;
   }
 
   .name-input,
-  .desc-input {
+  .desc-input,
+  .prio-input {
     gap: 5px;
   }
 
   #search-task-form,
-  #categorize-task-form {
+  #categorize-task-form,
+  #priority-task-form {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  #priority-task-form div {
+    flex-direction: column;
+    align-items: center;
   }
 }
