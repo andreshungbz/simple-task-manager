@@ -3,6 +3,7 @@ partial that renders the list of tasks -->
 
 <section class="tasksSection">
   <ul>
+    <% if (tasks.length === 0) { %> No tasks or matching tasks. <% } else { %>
     <% tasks.forEach(task => { %>
     <li <% if (task.completed) { %>
       class="completed"<% } %>>
@@ -27,6 +28,6 @@ partial that renders the list of tasks -->
         </form>
       </div>
     </li>
-    <% }) %>
+    <% }) %> <% } %>
   </ul>
 </section>
