@@ -43,7 +43,7 @@ Visit the application in the web browser at `http://localhost:3000`.
 
 ## Video Demo
 
-A video demonstration of the application can be found on following [YouTube video link](https://youtube.com).
+A video demonstration of the application can be found on following [YouTube video link](https://youtu.be/eLsCZuz6unk?si=jpYKDt5gWdlQIH2v).
 
 ## Attributions
 
