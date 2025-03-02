@@ -9,13 +9,13 @@ const taskRoutes = express.Router();
 // store tasks in memory in an array; remove exampleData and set ID to 0 for empty initial list
 
 // USE EXAMPLE DATA
-import data from '../data.js';
-const tasks = [...data];
-let id = data.length + 1;
+// import data from '../data.js';
+// const tasks = [...data];
+// let id = data.length + 1;
 
 // USE EMPTY INITIAL LIST
-// const tasks = [];
-// let id = 1;
+const tasks = [];
+let id = 1;
 
 // GENERAL ROUTES
 
