@@ -41,6 +41,10 @@ npm start
 
 Visit the application in the web browser at `http://localhost:3000`.
 
+## Video Demo
+
+A video demonstration of the application can be found on following [YouTube video link](https://youtube.com).
+
 ## Attributions
 
 Favicon clipboard icon is copyright 2020 Twitter, Inc and other contributors. The graphics are licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). No modifications were made to the original image.
