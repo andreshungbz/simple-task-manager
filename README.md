@@ -15,11 +15,7 @@ A simple task manager todo list SSR web application written using Node.js, Expre
 
 Ensure you have Node.js installed. Any modern version will do.
 
-Clone the repository (public repository only) or download and decompress the ZIP file using the decompression tool of your choice.
-
-```
-git clone https://github.com/andreshungbz/cmps2212-task-mgmt-app.git
-```
+Using the green `Code` button at the top of the GitHub repository page, clone the repository through HTTPS/SSH or download and decompress the ZIP file using the decompression tool of your choice. The ZIP file will not include the git commit information locally.
 
 Change directory to the project folder.
 
