@@ -4,6 +4,8 @@
 import express from 'express';
 import taskSorter from '../utils/taskSorter.js';
 
+import { Task } from '../types/Task.js';
+
 const taskRoutes = express.Router();
 
 // store tasks in memory in an array; remove exampleData and set ID to 0 for empty initial list
@@ -14,7 +16,7 @@ const taskRoutes = express.Router();
 // let id = data.length + 1;
 
 // USE EMPTY INITIAL LIST
-const tasks = [];
+const tasks: Task[] = [];
 let id = 1;
 
 // GENERAL ROUTES
@@ -25,9 +27,9 @@ taskRoutes.get('/', (req, res) => {
   let renderedTasks = [...tasks];
 
   // get query parameters to use if necessary
-  const search = req.query.search || '';
-  const category = req.query.category || 'all';
-  const priority = req.query.priority || '';
+  const search = req.query.search ? String(req.query.search) : '';
+  const category = req.query.category ? String(req.query.category) : 'all';
+  const priority = req.query.priority ? String(req.query.priority) : '';
 
   // filter by search query
   if (search) {
@@ -85,12 +87,12 @@ taskRoutes.get('/', (req, res) => {
 });
 
 // usage
-taskRoutes.get('/usage', (req, res) => {
+taskRoutes.get('/usage', (_req, res) => {
   res.render('usage');
 });
 
 // about
-taskRoutes.get('/about', (req, res) => {
+taskRoutes.get('/about', (_req, res) => {
   res.render('about');
 });
 

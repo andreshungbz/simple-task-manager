@@ -15,14 +15,24 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "clean": "rm -rf build",
+    "build": "npm run clean && tsc",
+    "start": "npm run build && node build/app.js",
+    "dev": "tsc && concurrently -k -n \"TS,SERVER\" -c \"cyan,green\" \"tsc --watch\" \"wait-on build/app.js && node --watch build/app.js\"",
+    "dbsetup": "psql -U postgres -f script/setup.sql"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.11",
+    "@types/pg": "^8.11.11",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.2",
+    "wait-on": "^8.0.3"
   }
 }
