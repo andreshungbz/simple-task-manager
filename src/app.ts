@@ -3,9 +3,12 @@
 
 import express from 'express';
 import path from 'path';
+
 import logger from './middleware/logger.js';
 import missingRoute from './middleware/missingRoute.js';
+
 import taskRoutes from './routes/taskRoutes.js';
+import infoRoutes from './routes/infoRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +27,7 @@ app.use(logger);
 
 // routes
 app.use('/', taskRoutes);
+app.use('/', infoRoutes);
 
 // handle non-existent routes
 app.use(missingRoute);
