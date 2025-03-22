@@ -13,9 +13,10 @@ import {
 const taskRoutes = express.Router();
 
 // TASK OPERATION ROUTES
-taskRoutes.get('/', getTasks);
-taskRoutes.post('/add-task', postTask);
-taskRoutes.post('/toggle-task/:id', patchTask);
-taskRoutes.post('/delete-task/:id', deleteTask);
+
+taskRoutes.get('/', getTasks); // HTTP GET
+taskRoutes.post('/add-task', postTask); // HTTP POST
+taskRoutes.post('/toggle-task/:id', patchTask); // HTTP PATCH
+taskRoutes.post('/delete-task/:id', deleteTask); // HTTP DELETE
 
 export default taskRoutes;
