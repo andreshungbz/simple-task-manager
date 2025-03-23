@@ -22,7 +22,6 @@ export const getTasks = async (req: Request, res: Response) => {
 
   const tasks: Task[][] = (await readTasks({ search, category, priority }))
     .rows;
-  console.log(tasks);
 
   // pass a filter object so filter input forms can pre-populate with last selection
   res.render('index', {
@@ -37,7 +36,7 @@ export const getTasks = async (req: Request, res: Response) => {
 
 // POST
 
-export const postTask = (req: Request, res: Response) => {
+export const postTask = async (req: Request, res: Response) => {
   const { taskTitle, taskDescription, taskPriority } = req.body;
 
   // handle missing fields
@@ -49,7 +48,7 @@ export const postTask = (req: Request, res: Response) => {
     });
   }
 
-  insertTask(taskTitle, taskDescription, taskPriority);
+  await insertTask(taskTitle, taskDescription, taskPriority);
 
   // don't redirect to previous URL in case task properties don't match applied filters
   res.redirect('/');
@@ -57,7 +56,7 @@ export const postTask = (req: Request, res: Response) => {
 
 // PATCH
 
-export const patchTask = (req: Request, res: Response) => {
+export const patchTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID
@@ -68,7 +67,7 @@ export const patchTask = (req: Request, res: Response) => {
     });
   }
 
-  const ok = updateTaskStatus(taskID);
+  const ok = await updateTaskStatus(taskID);
 
   // handle non-existent task
   if (!ok) {

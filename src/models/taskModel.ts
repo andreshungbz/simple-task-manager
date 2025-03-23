@@ -7,7 +7,6 @@ import { QueryArrayResult } from 'pg';
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
 import { Task } from '../types/Task.js';
-import taskSorter from '../utils/taskSorter.js';
 
 // USE EMPTY INITIAL LIST
 const tasks: Task[] = [];
@@ -54,18 +53,19 @@ export const insertTask = async (
 
 // UPDATE
 
-export const updateTaskStatus = (id: number): boolean => {
-  const task = tasks.find((t) => t.id === id);
-
-  // handle non-existent task
-  if (!task) {
-    return false;
+export const updateTaskStatus = async (id: number): Promise<boolean> => {
+  try {
+    await query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [
+      id,
+    ]);
+    return true;
+  } catch (error) {
+    console.error(
+      '[taskModel/updateTaskStatus] Error toggling task status:',
+      error
+    );
+    throw error;
   }
-
-  task.completed = !task.completed;
-  tasks.sort(taskSorter);
-
-  return true;
 };
 
 // REMOVE (DELETE)
