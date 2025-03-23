@@ -37,9 +37,9 @@ export const readTasks = async ({
   }
 
   // apply sort
-  if (priority === 'highToLow') {
+  if (priority === 'high') {
     queryString += ` ORDER BY CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END ASC`;
-  } else if (priority === 'lowToHigh') {
+  } else if (priority === 'low') {
     queryString += ` ORDER BY CASE priority WHEN 'low' THEN 1 WHEN 'medium' THEN 2 WHEN 'high' THEN 3 END ASC`;
   }
 

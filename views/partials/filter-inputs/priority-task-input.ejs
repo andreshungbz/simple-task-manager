@@ -5,15 +5,15 @@ partial for form that filters tasks by priority -->
   <div id="priority-task-input">
     <div>
       <label>
-        <input type="radio" name="priority" value="" checked /> None
+        <input type="radio" name="priorityOrder" value="" checked /> None
       </label>
       <label>
-        <input type="radio" name="priority" value="highToLow" <%=
-        filter.priority === 'highToLow' ? 'checked' : '' %> /> Highest First
+        <input type="radio" name="priorityOrder" value="high" <%=
+        filter.priorityOrder === 'high' ? 'checked' : '' %> /> Highest First
       </label>
       <label>
-        <input type="radio" name="priority" value="lowToHigh" <%=
-        filter.priority === 'lowToHigh' ? 'checked' : '' %> /> Lowest First
+        <input type="radio" name="priorityOrder" value="low" <%=
+        filter.priorityOrder === 'low' ? 'checked' : '' %> /> Lowest First
       </label>
     </div>
     <button type="submit">Sort By Priority</button>

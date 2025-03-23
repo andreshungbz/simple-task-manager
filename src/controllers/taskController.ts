@@ -20,9 +20,11 @@ export const getTasks = async (req: Request, res: Response) => {
   // get query parameters to use if necessary
   const search = req.query.search ? String(req.query.search) : null;
   const category = req.query.category ? String(req.query.category) : 'all';
-  const priority = req.query.priority ? String(req.query.priority) : null;
+  const priorityOrder = req.query.priorityOrder
+    ? String(req.query.priorityOrder)
+    : null;
 
-  const options: FilterOptions = { search, category, priority };
+  const options: FilterOptions = { search, category, priority: priorityOrder };
   const tasks: Task[] = (await readTasks(options)).rows;
 
   tasks.sort(taskSorter);
@@ -33,7 +35,7 @@ export const getTasks = async (req: Request, res: Response) => {
     filter: {
       search,
       category,
-      priority,
+      priorityOrder: priorityOrder,
     },
   });
 };
