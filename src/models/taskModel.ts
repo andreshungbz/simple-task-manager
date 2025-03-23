@@ -73,7 +73,7 @@ export const insertTask = async (
 
 // UPDATE
 
-export const updateTaskStatus = async (id: number): Promise<boolean> => {
+export const toggleTaskCompleted = async (id: number): Promise<boolean> => {
   try {
     const result = await query(
       'UPDATE tasks SET completed = NOT completed WHERE id = $1',
@@ -82,7 +82,7 @@ export const updateTaskStatus = async (id: number): Promise<boolean> => {
     return Boolean(result.rowCount);
   } catch (error) {
     console.error(
-      '[taskModel/updateTaskStatus] Error toggling task status:',
+      '[taskModel/toggleTaskCompleted] Error toggling task status:',
       error
     );
     throw error;

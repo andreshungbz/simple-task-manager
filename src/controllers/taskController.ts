@@ -7,7 +7,7 @@ import {
   insertTask,
   readTasks,
   removeTask,
-  updateTaskStatus,
+  toggleTaskCompleted,
 } from '../models/taskModel.js';
 
 import { Task } from '../types/Task.js';
@@ -69,7 +69,7 @@ export const patchTask = async (req: Request, res: Response) => {
     });
   }
 
-  const ok = await updateTaskStatus(taskID);
+  const ok = await toggleTaskCompleted(taskID);
 
   // handle non-existent task
   if (!ok) {
