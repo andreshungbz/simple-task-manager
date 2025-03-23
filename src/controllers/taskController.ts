@@ -10,19 +10,23 @@ import {
   updateTaskStatus,
 } from '../models/taskModel.js';
 
+import { Task } from '../types/Task.js';
+
 // GET
 
-export const getTasks = (req: Request, res: Response) => {
+export const getTasks = async (req: Request, res: Response) => {
   // get query parameters to use if necessary
   const search = req.query.search ? String(req.query.search) : '';
   const category = req.query.category ? String(req.query.category) : 'all';
   const priority = req.query.priority ? String(req.query.priority) : '';
 
-  const renderedTasks = readTasks({ search, category, priority });
+  const tasks: Task[][] = (await readTasks({ search, category, priority }))
+    .rows;
+  console.log(tasks);
 
   // pass a filter object so filter input forms can pre-populate with last selection
   res.render('index', {
-    tasks: renderedTasks,
+    tasks: tasks,
     filter: {
       search,
       category,

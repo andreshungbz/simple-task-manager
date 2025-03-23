@@ -1,6 +1,9 @@
 // Filename: taskModel.ts
 // database implementation of task operations
 
+import { query } from '../config/database.js';
+import { QueryArrayResult } from 'pg';
+
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
 import { Task } from '../types/Task.js';
@@ -12,57 +15,21 @@ let id = 1;
 
 // READ
 
-export const readTasks = ({
+export const readTasks = async ({
   search,
   category,
   priority,
-}: FilterOptions): Task[] => {
-  // create a copy of the tasks; this is fine since the reference to same object is copied
-  let renderedTasks = [...tasks];
+}: FilterOptions): Promise<QueryArrayResult> => {
+  let renderedTasks;
 
-  // filter by search query
-  if (search) {
-    renderedTasks = renderedTasks.filter((t) => {
-      const text = search.toLowerCase();
-      const title = t.title.toLowerCase();
-      const description = t.description.toLowerCase();
-
-      return title.includes(text) || description.includes(text);
-    });
+  try {
+    renderedTasks = await query('SELECT * FROM tasks');
+  } catch (error) {
+    console.error('[taskModel] Error fetching tasks:', error);
+    throw error;
   }
 
-  // fitler by category (completed status)
-  if (category) {
-    renderedTasks = renderedTasks.filter((t) => {
-      switch (category) {
-        case 'completed':
-          return t.completed;
-        case 'incomplete':
-          return !t.completed;
-        default:
-          return true;
-      }
-    });
-  }
-
-  // sort by priority
-  if (priority) {
-    const priorityOrder = { high: 1, medium: 2, low: 3 };
-
-    renderedTasks.sort((t1, t2) => {
-      switch (priority) {
-        case 'highToLow':
-          return priorityOrder[t1.priority] - priorityOrder[t2.priority];
-        case 'lowToHigh':
-          return priorityOrder[t2.priority] - priorityOrder[t1.priority];
-        default:
-          return 0;
-      }
-    });
-
-    // resort so completed tasks are always at the end
-    renderedTasks.sort(taskSorter);
-  }
+  console.log(search, category, priority);
 
   return renderedTasks;
 };
