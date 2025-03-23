@@ -19,7 +19,9 @@
     "build": "npm run clean && tsc",
     "start": "npm run build && node build/app.js",
     "dev": "tsc && concurrently -k -n \"TS,NODE\" -c \"cyan,green\" \"tsc --watch\" \"wait-on build/app.js && node --watch build/app.js\"",
-    "dbsetup": "psql -U postgres -f script/setup.sql"
+    "dbsetup": "psql --username=postgres --file=scripts/setup.sql",
+    "dbtables": "psql --username=stm_user --dbname=cmps2212_stm --file=scripts/tables.sql",
+    "initiatedb": "npm run dbsetup && npm run dbtables"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
