@@ -11,7 +11,6 @@ import taskSorter from '../utils/taskSorter.js';
 
 // USE EMPTY INITIAL LIST
 const tasks: Task[] = [];
-let id = 1;
 
 // READ
 
@@ -25,7 +24,7 @@ export const readTasks = async ({
   try {
     renderedTasks = await query('SELECT * FROM tasks');
   } catch (error) {
-    console.error('[taskModel] Error fetching tasks:', error);
+    console.error('[taskModel/readTasks] Error fetching tasks:', error);
     throw error;
   }
 
@@ -36,18 +35,21 @@ export const readTasks = async ({
 
 // INSERT
 
-export const insertTask = (
+export const insertTask = async (
   title: string,
-  description: string = '',
+  description: string | null = null,
   priority: Priority
 ) => {
-  tasks.unshift({
-    id: id++,
-    title: title,
-    description: description,
-    completed: false,
-    priority: priority,
-  });
+  try {
+    const result = await query(
+      'INSERT INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
+      [title, description, priority]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error('[taskModel/insertTask] Error inserting task:', error);
+    throw error;
+  }
 };
 
 // UPDATE
