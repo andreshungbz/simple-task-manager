@@ -2,7 +2,7 @@
 // database implementation of task operations
 
 import { query } from '../config/database.js';
-import { QueryArrayResult } from 'pg';
+import { QueryResult } from 'pg';
 
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
@@ -13,19 +13,43 @@ export const readTasks = async ({
   search,
   category,
   priority,
-}: FilterOptions): Promise<QueryArrayResult> => {
-  let renderedTasks;
+}: FilterOptions): Promise<QueryResult<any>> => {
+  let queryString = 'SELECT * FROM tasks';
+  const conditions: string[] = [];
+  const values: (string | null)[] = [];
+
+  // apply search filter
+  if (search) {
+    conditions.push('(title ILIKE $1 OR description ILIKE $1)');
+    values.push(`%${search.toLocaleLowerCase()}%`);
+  }
+
+  // apply category filter
+  if (category === 'completed') {
+    conditions.push('completed = true');
+  } else if (category === 'incomplete') {
+    conditions.push('completed = false');
+  }
+
+  // add conditions
+  if (conditions.length > 0) {
+    queryString += ` WHERE ${conditions.join(' AND ')}`;
+  }
+
+  // apply sort
+  if (priority === 'highToLow') {
+    queryString += ` ORDER BY CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END ASC`;
+  } else if (priority === 'lowToHigh') {
+    queryString += ` ORDER BY CASE priority WHEN 'low' THEN 1 WHEN 'medium' THEN 2 WHEN 'high' THEN 3 END ASC`;
+  }
 
   try {
-    renderedTasks = await query('SELECT * FROM tasks');
+    const result = await query(queryString, values);
+    return result;
   } catch (error) {
     console.error('[taskModel/readTasks] Error fetching tasks:', error);
     throw error;
   }
-
-  console.log(search, category, priority);
-
-  return renderedTasks;
 };
 
 // INSERT

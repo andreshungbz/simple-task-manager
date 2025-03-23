@@ -39,8 +39,13 @@ pool.on('error', (err) => {
 export const query = async (
   text: string,
   params?: Array<string | number | null>
-): Promise<pg.QueryArrayResult<any[]>> => {
-  return await pool.query(text, params);
+): Promise<pg.QueryResult<any>> => {
+  console.log(`QUERY: ${text}`);
+  console.log(`PARAMS: ${params}`);
+  return await pool.query({
+    text,
+    values: params,
+  });
 };
 
 export default pool;

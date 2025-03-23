@@ -11,6 +11,7 @@ import {
 } from '../models/taskModel.js';
 
 import { Task } from '../types/Task.js';
+import taskSorter from '../utils/taskSorter.js';
 
 // GET
 
@@ -20,8 +21,9 @@ export const getTasks = async (req: Request, res: Response) => {
   const category = req.query.category ? String(req.query.category) : 'all';
   const priority = req.query.priority ? String(req.query.priority) : '';
 
-  const tasks: Task[][] = (await readTasks({ search, category, priority }))
-    .rows;
+  const tasks: Task[] = (await readTasks({ search, category, priority })).rows;
+
+  tasks.sort(taskSorter);
 
   // pass a filter object so filter input forms can pre-populate with last selection
   res.render('index', {
