@@ -11,17 +11,19 @@ import {
 } from '../models/taskModel.js';
 
 import { Task } from '../types/Task.js';
+import { FilterOptions } from '../types/FilterOptions.js';
 import taskSorter from '../utils/taskSorter.js';
 
 // GET
 
 export const getTasks = async (req: Request, res: Response) => {
   // get query parameters to use if necessary
-  const search = req.query.search ? String(req.query.search) : '';
+  const search = req.query.search ? String(req.query.search) : null;
   const category = req.query.category ? String(req.query.category) : 'all';
-  const priority = req.query.priority ? String(req.query.priority) : '';
+  const priority = req.query.priority ? String(req.query.priority) : null;
 
-  const tasks: Task[] = (await readTasks({ search, category, priority })).rows;
+  const options: FilterOptions = { search, category, priority };
+  const tasks: Task[] = (await readTasks(options)).rows;
 
   tasks.sort(taskSorter);
 

@@ -2,7 +2,7 @@
 // type for filter option values
 
 export interface FilterOptions {
-  search: string;
-  category: string;
-  priority: string;
+  search: string | null;
+  category: string | null;
+  priority: string | null;
 }

@@ -1,3 +1,6 @@
+// Filename: Tasks.ts
+// Task interface
+
 import { Priority } from './Priority.js';
 
 export interface Task {
@@ -6,4 +9,5 @@ export interface Task {
   description: string;
   completed: boolean;
   priority: Priority;
+  created_at: Date;
 }
