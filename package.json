@@ -1,14 +1,14 @@
 {
-  "name": "cmps2212-task-mgmt-app",
-  "version": "1.0.0",
+  "name": "simple-task-manager",
+  "version": "2.0.0",
   "description": "Simple Task Manager Web Application",
-  "homepage": "https://github.com/andreshungbz/cmps2212-task-mgmt-app#readme",
+  "homepage": "https://github.com/andreshungbz/simple-task-manager#readme",
   "bugs": {
-    "url": "https://github.com/andreshungbz/cmps2212-task-mgmt-app/issues"
+    "url": "https://github.com/andreshungbz/simple-task-manager/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreshungbz/cmps2212-task-mgmt-app.git"
+    "url": "git+https://github.com/andreshungbz/simple-task-manager.git"
   },
   "license": "ISC",
   "author": "Andres Hung",
