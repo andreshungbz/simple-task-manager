@@ -45,12 +45,29 @@ export const getTasks = async (req: Request, res: Response) => {
 export const postTask = async (req: Request, res: Response) => {
   let { taskTitle, taskDescription, taskPriority } = req.body;
 
-  // handle missing fields
+  // handle missing title
   if (!taskTitle) {
     return res.render('error', {
       title: 'Error: Missing Title Field',
       description:
         "The content of the task's title was missing. Task not added.",
+    });
+  }
+
+  // handle title length constraint
+  if (taskTitle.length < 3 || taskTitle.length > 100) {
+    return res.render('error', {
+      title: 'Error: Title Length Error',
+      description:
+        'The title must be between 3 - 100 characters. Task not added',
+    });
+  }
+
+  // handle descriptions that are too long
+  if (taskDescription && taskDescription.length > 500) {
+    return res.render('error', {
+      title: 'Error: Description Too Long',
+      description: 'The description exceeds 500 characters. Task not added.',
     });
   }
 

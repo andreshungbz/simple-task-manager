@@ -6,11 +6,22 @@ partial for form that adds a task -->
     <div class="text-input-section">
       <div class="name-input">
         <label for="task-title">Task Name:</label>
-        <input type="text" id="task-title" name="taskTitle" required />
+        <input
+          type="text"
+          id="task-title"
+          name="taskTitle"
+          minlength="3"
+          maxlength="100"
+          required
+        />
       </div>
       <div class="desc-input">
         <label for="task-description">Description:</label>
-        <textarea id="task-description" name="taskDescription"></textarea>
+        <textarea
+          id="task-description"
+          name="taskDescription"
+          maxlength="500"
+        ></textarea>
       </div>
       <div class="prio-input">
         <label>Priority:</label>
