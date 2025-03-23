@@ -43,15 +43,20 @@ export const getTasks = async (req: Request, res: Response) => {
 // POST
 
 export const postTask = async (req: Request, res: Response) => {
-  const { taskTitle, taskDescription, taskPriority } = req.body;
+  let { taskTitle, taskDescription, taskPriority } = req.body;
 
   // handle missing fields
-  if (!taskTitle || !taskDescription) {
+  if (!taskTitle) {
     return res.render('error', {
-      title: 'Error: Missing Field',
+      title: 'Error: Missing Title Field',
       description:
-        "The content of the task's title and/or description was missing. Task not added.",
+        "The content of the task's title was missing. Task not added.",
     });
+  }
+
+  // null adjust in case of undefined or empty string so that null is entered to database
+  if (!taskDescription) {
+    taskDescription = null;
   }
 
   await insertTask(taskTitle, taskDescription, taskPriority);
