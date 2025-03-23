@@ -51,10 +51,11 @@ export const insertTask = async (
 
 export const updateTaskStatus = async (id: number): Promise<boolean> => {
   try {
-    await query('UPDATE tasks SET completed = NOT completed WHERE id = $1', [
-      id,
-    ]);
-    return true;
+    const result = await query(
+      'UPDATE tasks SET completed = NOT completed WHERE id = $1',
+      [id]
+    );
+    return Boolean(result.rowCount);
   } catch (error) {
     console.error(
       '[taskModel/updateTaskStatus] Error toggling task status:',
@@ -68,8 +69,8 @@ export const updateTaskStatus = async (id: number): Promise<boolean> => {
 
 export const removeTask = async (id: number): Promise<boolean> => {
   try {
-    await query('DELETE FROM tasks WHERE id = $1', [id]);
-    return true;
+    const result = await query('DELETE FROM tasks WHERE id = $1', [id]);
+    return Boolean(result.rowCount);
   } catch (error) {
     console.error('[taskModel/removeTask] Error deleting task:', error);
     throw error;
