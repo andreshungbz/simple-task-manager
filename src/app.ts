@@ -10,8 +10,10 @@ import missingRoute from './middleware/missingRoute.js';
 import taskRoutes from './routes/taskRoutes.js';
 import infoRoutes from './routes/infoRoutes.js';
 
+import { config } from './config/app.config.js';
+import { getLocalIPAddress } from './utils/getLocalIPAddress.js';
+
 const app = express();
-const PORT = 3000;
 
 // EJS templating
 app.set('view engine', 'ejs');
@@ -33,6 +35,10 @@ app.use('/', infoRoutes);
 app.use(missingRoute);
 
 // start server
-app.listen(PORT, () => {
-  console.log(`Simple Task Manager running at http://localhost:${PORT}`);
+app.listen(config.port, () => {
+  console.log(
+    `[${config.abbreviation}] ${
+      config.name
+    } running at http://${getLocalIPAddress()}:${config.port}`
+  );
 });
