@@ -25,19 +25,25 @@ export const getTasks = async (req: Request, res: Response) => {
     : null;
 
   const options: FilterOptions = { search, category, priority: priorityOrder };
-  const tasks: Task[] = (await readTasks(options)).rows;
 
-  tasks.sort(taskSorter);
+  try {
+    const tasks: Task[] = (await readTasks(options)).rows;
 
-  // pass a filter object so filter input forms can pre-populate with last selection
-  res.render('index', {
-    tasks: tasks,
-    filter: {
-      search,
-      category,
-      priorityOrder: priorityOrder,
-    },
-  });
+    tasks.sort(taskSorter);
+    res.render('index', {
+      tasks: tasks,
+      filter: {
+        search,
+        category,
+        priorityOrder: priorityOrder,
+      },
+    });
+  } catch {
+    return res.render('error', {
+      title: 'Internal Database Error',
+      description: 'Sorry! Something went wrong! Please try again.',
+    });
+  }
 };
 
 // POST
@@ -76,10 +82,16 @@ export const addTask = async (req: Request, res: Response) => {
     taskDescription = null;
   }
 
-  await insertTask(taskTitle, taskDescription, taskPriority);
-
-  // don't redirect to previous URL in case task properties don't match applied filters
-  res.redirect('/');
+  try {
+    await insertTask(taskTitle, taskDescription, taskPriority);
+    // don't redirect to previous URL in case task properties don't match applied filters
+    res.redirect('/');
+  } catch {
+    return res.render('error', {
+      title: 'Internal Database Error',
+      description: 'Sorry! Something went wrong! Please try again.',
+    });
+  }
 };
 
 // PATCH
@@ -95,19 +107,26 @@ export const toggleTask = async (req: Request, res: Response) => {
     });
   }
 
-  const ok = await toggleCompleted(taskID);
+  try {
+    const ok = await toggleCompleted(taskID);
 
-  // handle non-existent task
-  if (!ok) {
+    // handle non-existent task
+    if (!ok) {
+      return res.render('error', {
+        title: 'Error: Non-existent Task',
+        description: 'Task does not exist in list. Task not processed.',
+      });
+    }
+
+    // redirect to previous URL
+    const referer = req.get('Referer');
+    res.redirect(referer || '/');
+  } catch {
     return res.render('error', {
-      title: 'Error: Non-existent Task',
-      description: 'Task does not exist in list. Task not processed.',
+      title: 'Internal Database Error',
+      description: 'Sorry! Something went wrong! Please try again.',
     });
   }
-
-  // redirect to previous URL
-  const referer = req.get('Referer');
-  res.redirect(referer || '/');
 };
 
 // DELETE
@@ -123,17 +142,24 @@ export const removeTask = async (req: Request, res: Response) => {
     });
   }
 
-  const ok = await deleteTask(taskID);
+  try {
+    const ok = await deleteTask(taskID);
 
-  // handle non-existent task
-  if (!ok) {
+    // handle non-existent task
+    if (!ok) {
+      return res.render('error', {
+        title: 'Error: Non-existent Task',
+        description: 'Task does not exist in list. Task not processed.',
+      });
+    }
+
+    // redirect to previous URL
+    const referer = req.get('Referer');
+    res.redirect(referer || '/');
+  } catch {
     return res.render('error', {
-      title: 'Error: Non-existent Task',
-      description: 'Task does not exist in list. Task not processed.',
+      title: 'Internal Database Error',
+      description: 'Sorry! Something went wrong! Please try again.',
     });
   }
-
-  // redirect to previous URL
-  const referer = req.get('Referer');
-  res.redirect(referer || '/');
 };
