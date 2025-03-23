@@ -5,9 +5,9 @@ import express from 'express';
 
 import {
   getTasks,
-  postTask,
-  patchTask,
-  deleteTask,
+  addTask,
+  toggleTask,
+  removeTask,
 } from '../controllers/taskController.js';
 
 const taskRoutes = express.Router();
@@ -15,8 +15,8 @@ const taskRoutes = express.Router();
 // TASK OPERATION ROUTES
 
 taskRoutes.get('/', getTasks); // HTTP GET
-taskRoutes.post('/add-task', postTask); // HTTP POST
-taskRoutes.post('/toggle-task/:id', patchTask); // HTTP PATCH
-taskRoutes.post('/delete-task/:id', deleteTask); // HTTP DELETE
+taskRoutes.post('/add-task', addTask); // HTTP POST
+taskRoutes.post('/toggle-task/:id', toggleTask); // HTTP PATCH
+taskRoutes.post('/delete-task/:id', removeTask); // HTTP DELETE
 
 export default taskRoutes;

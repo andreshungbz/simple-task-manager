@@ -6,8 +6,8 @@ import { Request, Response } from 'express';
 import {
   insertTask,
   readTasks,
-  removeTask,
-  toggleTaskCompleted,
+  removeTask as deleteTask,
+  toggleTaskCompleted as toggleCompleted,
 } from '../models/taskModel.js';
 
 import { Task } from '../types/Task.js';
@@ -42,7 +42,7 @@ export const getTasks = async (req: Request, res: Response) => {
 
 // POST
 
-export const postTask = async (req: Request, res: Response) => {
+export const addTask = async (req: Request, res: Response) => {
   let { taskTitle, taskDescription, taskPriority } = req.body;
 
   // handle missing title
@@ -84,7 +84,7 @@ export const postTask = async (req: Request, res: Response) => {
 
 // PATCH
 
-export const patchTask = async (req: Request, res: Response) => {
+export const toggleTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID
@@ -95,7 +95,7 @@ export const patchTask = async (req: Request, res: Response) => {
     });
   }
 
-  const ok = await toggleTaskCompleted(taskID);
+  const ok = await toggleCompleted(taskID);
 
   // handle non-existent task
   if (!ok) {
@@ -112,7 +112,7 @@ export const patchTask = async (req: Request, res: Response) => {
 
 // DELETE
 
-export const deleteTask = async (req: Request, res: Response) => {
+export const removeTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID
@@ -123,7 +123,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     });
   }
 
-  const ok = await removeTask(taskID);
+  const ok = await deleteTask(taskID);
 
   // handle non-existent task
   if (!ok) {
