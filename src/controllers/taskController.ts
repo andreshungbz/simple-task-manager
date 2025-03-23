@@ -84,7 +84,7 @@ export const patchTask = async (req: Request, res: Response) => {
 
 // DELETE
 
-export const deleteTask = (req: Request, res: Response) => {
+export const deleteTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID
@@ -95,7 +95,7 @@ export const deleteTask = (req: Request, res: Response) => {
     });
   }
 
-  const ok = removeTask(taskID);
+  const ok = await removeTask(taskID);
 
   // handle non-existent task
   if (!ok) {

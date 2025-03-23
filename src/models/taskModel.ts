@@ -6,10 +6,6 @@ import { QueryArrayResult } from 'pg';
 
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
-import { Task } from '../types/Task.js';
-
-// USE EMPTY INITIAL LIST
-const tasks: Task[] = [];
 
 // READ
 
@@ -70,15 +66,12 @@ export const updateTaskStatus = async (id: number): Promise<boolean> => {
 
 // REMOVE (DELETE)
 
-export const removeTask = (id: number): boolean => {
-  const taskIndex = tasks.findIndex((t) => t.id === id);
-
-  // handle non-existent task
-  if (taskIndex === -1) {
-    return false;
+export const removeTask = async (id: number): Promise<boolean> => {
+  try {
+    await query('DELETE FROM tasks WHERE id = $1', [id]);
+    return true;
+  } catch (error) {
+    console.error('[taskModel/removeTask] Error deleting task:', error);
+    throw error;
   }
-
-  tasks.splice(taskIndex, 1);
-
-  return true;
 };
