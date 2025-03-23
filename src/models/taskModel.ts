@@ -12,7 +12,7 @@ import { Priority } from '../types/Priority.js';
 export const readTasks = async ({
   search,
   category,
-  priority,
+  priorityOrder,
 }: FilterOptions): Promise<QueryResult<any>> => {
   let queryString = 'SELECT * FROM tasks';
   const conditions: string[] = [];
@@ -37,9 +37,9 @@ export const readTasks = async ({
   }
 
   // apply sort
-  if (priority === 'high') {
+  if (priorityOrder === 'high') {
     queryString += ` ORDER BY CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END ASC`;
-  } else if (priority === 'low') {
+  } else if (priorityOrder === 'low') {
     queryString += ` ORDER BY CASE priority WHEN 'low' THEN 1 WHEN 'medium' THEN 2 WHEN 'high' THEN 3 END ASC`;
   }
 

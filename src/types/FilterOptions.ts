@@ -4,5 +4,5 @@
 export interface FilterOptions {
   search: string | null;
   category: string | null;
-  priority: string | null;
+  priorityOrder: string | null;
 }

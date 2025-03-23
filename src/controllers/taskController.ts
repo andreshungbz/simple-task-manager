@@ -24,7 +24,7 @@ export const getTasks = async (req: Request, res: Response) => {
     ? String(req.query.priorityOrder)
     : null;
 
-  const options: FilterOptions = { search, category, priority: priorityOrder };
+  const options: FilterOptions = { search, category, priorityOrder };
 
   try {
     const tasks: Task[] = (await readTasks(options)).rows;
