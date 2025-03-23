@@ -5,13 +5,14 @@ partial for form that adds a task -->
   <form id="add-task-form" method="POST" action="/add-task">
     <div class="text-input-section">
       <div class="name-input">
-        <label for="task-title">Task Name:</label>
+        <label for="task-title">Task Title:</label>
         <input
           type="text"
           id="task-title"
           name="taskTitle"
           minlength="3"
           maxlength="100"
+          placeholder="What to do..."
           required
         />
       </div>
