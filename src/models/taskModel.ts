@@ -4,20 +4,16 @@
 import { query } from '../config/database.js';
 import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
-import { QueryResult } from 'pg';
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
 import { Task } from '../types/Task.js';
 
 // READ
 
-export const readTasks = async (
-  options: FilterOptions
-): Promise<QueryResult<any>> => {
+export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
   const queryObject = createPGTaskSELECT(options);
   try {
-    const result = await query(queryObject.query, queryObject.values);
-    return result;
+    return (await query(queryObject.query, queryObject.values)).rows;
   } catch (error) {
     console.error('[taskModel/readTasks] Error fetching tasks:', error);
     throw error;

@@ -29,7 +29,7 @@ export const getTasks = async (req: Request, res: Response) => {
   const options: FilterOptions = { search, category, priorityOrder };
 
   try {
-    const tasks: Task[] = (await readTasks(options)).rows;
+    const tasks: Task[] = await readTasks(options);
     tasks.sort(taskSorter);
 
     res.render('index', {
