@@ -15,7 +15,7 @@ const taskRoutes = express.Router();
 // TASK OPERATION ROUTES
 
 taskRoutes.get('/', getTasks); // HTTP GET
-taskRoutes.post('/add-task', addTask); // HTTP POST
+taskRoutes.post('/tasks', addTask); // HTTP POST
 taskRoutes.patch('/tasks/:id', toggleTask); // HTTP PATCH
 taskRoutes.delete('/tasks/:id', removeTask); // HTTP DELETE
 
