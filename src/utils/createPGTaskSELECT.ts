@@ -1,29 +1,27 @@
-// Filename: createQueryString.ts
+// Filename: createPGTaskSELECT.ts
 // function that takes search, category, and priority order parameters
 // and returns and object with the SQL query string and values for PG
 
 import { FilterOptions } from '../types/TaskTypes.js';
 
-export const createPGTaskSELECT = ({
-  search,
-  category,
-  priorityOrder,
-}: FilterOptions): { query: string; values: (string | null)[] } => {
+export const createPGTaskSELECT = (
+  options: FilterOptions
+): { query: string; values: (string | null)[] } => {
   // initial variables
   let query = 'SELECT * FROM tasks';
   const conditions: string[] = [];
   const values: (string | null)[] = [];
 
   // apply search filter
-  if (search) {
+  if (options.search) {
     conditions.push('(title ILIKE $1 OR description ILIKE $1)');
-    values.push(`%${search.toLocaleLowerCase()}%`);
+    values.push(`%${options.search.toLocaleLowerCase()}%`);
   }
 
   // apply category filter
-  if (category === 'completed') {
+  if (options.category === 'completed') {
     conditions.push('completed = true');
-  } else if (category === 'incomplete') {
+  } else if (options.category === 'incomplete') {
     conditions.push('completed = false');
   }
 
@@ -33,9 +31,9 @@ export const createPGTaskSELECT = ({
   }
 
   // apply ORDER sort
-  if (priorityOrder === 'high') {
+  if (options.priorityOrder === 'high') {
     query += ` ORDER BY CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 END ASC`;
-  } else if (priorityOrder === 'low') {
+  } else if (options.priorityOrder === 'low') {
     query += ` ORDER BY CASE priority WHEN 'low' THEN 1 WHEN 'medium' THEN 2 WHEN 'high' THEN 3 END ASC`;
   }
 

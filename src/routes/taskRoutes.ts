@@ -21,7 +21,7 @@ taskRoutes.post('/tasks', addTask); // HTTP POST
 taskRoutes.patch('/tasks/:id', toggleTask); // HTTP PATCH
 taskRoutes.delete('/tasks/:id', removeTask); // HTTP DELETE
 
-taskRoutes.get('/update/tasks/:id', updateTaskPage);
-taskRoutes.put('/tasks/:id', changeTask);
+taskRoutes.get('/update/tasks/:id', updateTaskPage); // auxiliary page for HTTP PUT
+taskRoutes.put('/tasks/:id', changeTask); // HTTP PUT
 
 export default taskRoutes;

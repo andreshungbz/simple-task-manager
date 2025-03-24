@@ -1,5 +1,5 @@
 // Filename: TaskTypes.ts
-// interfaces for task types
+// interfaces for task types and options
 
 import { Priority } from './Priority.js';
 
@@ -20,6 +20,7 @@ export interface NewTask {
   description: string | null;
   priority: Priority;
 }
+
 // type for task filter option values
 export interface FilterOptions {
   search: string | null;

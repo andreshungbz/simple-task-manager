@@ -2,23 +2,20 @@
 // business logic of task operations
 
 import { Request, Response } from 'express';
+import { NewTask, Task, FilterOptions } from '../types/TaskTypes.js';
+import taskSorter from '../utils/taskSorter.js';
 
 import {
   createTask,
   readTasks,
-  deleteTask,
-  toggleCompleted,
   readTask,
+  toggleCompleted,
   updateTask,
+  deleteTask,
 } from '../models/taskModel.js';
 
-import { NewTask, Task, FilterOptions } from '../types/TaskTypes.js';
-import taskSorter from '../utils/taskSorter.js';
-
-// GET
-
+// GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
-  // get query parameters to use if necessary
   const search = req.query.search ? String(req.query.search) : null;
   const category = req.query.category ? String(req.query.category) : 'all';
   const priorityOrder = req.query.priorityOrder
@@ -26,10 +23,9 @@ export const getTasks = async (req: Request, res: Response) => {
     : null;
 
   const options: FilterOptions = { search, category, priorityOrder };
-
   try {
     const tasks: Task[] = await readTasks(options);
-    tasks.sort(taskSorter);
+    tasks.sort(taskSorter); // always sort
 
     res.render('index', {
       tasks,
@@ -47,8 +43,7 @@ export const getTasks = async (req: Request, res: Response) => {
   }
 };
 
-// POST
-
+// POST new task
 export const addTask = async (req: Request, res: Response) => {
   let { taskTitle, taskDescription, taskPriority } = req.body;
 
@@ -101,8 +96,7 @@ export const addTask = async (req: Request, res: Response) => {
   }
 };
 
-// PATCH
-
+// PATCH task's completed status
 export const toggleTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
@@ -136,8 +130,7 @@ export const toggleTask = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE
-
+// DELETE task
 export const removeTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
@@ -171,8 +164,7 @@ export const removeTask = async (req: Request, res: Response) => {
   }
 };
 
-// PUT
-
+// GET page for updating a task's fields (except completed)
 export const updateTaskPage = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
@@ -196,6 +188,7 @@ export const updateTaskPage = async (req: Request, res: Response) => {
   }
 };
 
+// PUT new task fields
 export const changeTask = async (req: Request, res: Response) => {
   const taskID = Number(req.params.id);
 
