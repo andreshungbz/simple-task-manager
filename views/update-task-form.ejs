@@ -1,0 +1,70 @@
+<!-- Filename: update-task-form.ejs
+partial for form that updates a task -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/common-meta') %>
+    <link href="/styles/form.css" rel="stylesheet" />
+    <title>Update Task</title>
+  </head>
+  <body>
+    <div class="app">
+      <%- include('partials/header') %>
+      <main>
+        <h2>Update Task</h2>
+        <section class="formSection">
+          <form
+            id="add-task-form"
+            method="POST"
+            action="/tasks/<%= task.id %>?_method=PUT"
+          >
+            <div class="text-input-section">
+              <div class="name-input">
+                <label for="task-title">Task Title:</label>
+                <input
+                  type="text"
+                  id="task-title"
+                  name="taskTitle"
+                  minlength="3"
+                  maxlength="100"
+                  placeholder="What to do..."
+                  value="<%= task.title %>"
+                  required
+                />
+              </div>
+              <div class="desc-input">
+                <label for="task-description">Description:</label>
+                <textarea
+                  id="task-description"
+                  name="taskDescription"
+                  maxlength="500"
+                >
+<%= task.description %></textarea
+                >
+              </div>
+              <div class="prio-input">
+                <label>Priority:</label>
+                <div>
+                  <label>
+                    <input type="radio" name="taskPriority" value="low" <%=
+                    task.priority === 'low' && 'checked' %> /> Low
+                  </label>
+                  <label>
+                    <input type="radio" name="taskPriority" value="medium" <%=
+                    task.priority === 'medium' && 'checked' %> /> Medium
+                  </label>
+                  <label>
+                    <input type="radio" name="taskPriority" value="high" <%=
+                    task.priority === 'high' && 'checked' %> /> High
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button type="submit">Update Task</button>
+          </form>
+        </section>
+      </main>
+      <%- include('partials/footer') %>
+    </div>
+  </body>
+</html>

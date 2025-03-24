@@ -6,6 +6,7 @@ import { QueryResult } from 'pg';
 
 import { FilterOptions } from '../types/FilterOptions.js';
 import { Priority } from '../types/Priority.js';
+import { Task } from '../types/Task.js';
 
 // READ
 
@@ -52,6 +53,24 @@ export const readTasks = async ({
   }
 };
 
+export const readTask = async (id: number): Promise<Task> => {
+  try {
+    const result = await query('SELECT * FROM tasks WHERE id=$1', [id]);
+
+    if (Boolean(result.rowCount)) {
+      return result.rows[0];
+    }
+
+    throw new Error('ID does not exist in database');
+  } catch (error) {
+    console.error(
+      '[taskModel/readTask] Error retrieving specific task:',
+      error
+    );
+    throw error;
+  }
+};
+
 // INSERT
 
 export const insertTask = async (
@@ -85,6 +104,24 @@ export const toggleTaskCompleted = async (id: number): Promise<boolean> => {
       '[taskModel/toggleTaskCompleted] Error toggling task status:',
       error
     );
+    throw error;
+  }
+};
+
+export const updateTask = async (
+  id: number,
+  title: string,
+  description: string | null = null,
+  priority: Priority
+): Promise<boolean> => {
+  try {
+    const result = await query(
+      'UPDATE tasks SET title = $1, description = $2, priority = $3 WHERE id = $4',
+      [title, description, priority, id]
+    );
+    return Boolean(result.rowCount);
+  } catch (error) {
+    console.error('[taskModel/updateTask] Error updating task:', error);
     throw error;
   }
 };

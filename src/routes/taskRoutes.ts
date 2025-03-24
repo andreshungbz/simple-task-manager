@@ -8,6 +8,8 @@ import {
   addTask,
   toggleTask,
   removeTask,
+  updateTaskPage,
+  changeTask,
 } from '../controllers/taskController.js';
 
 const taskRoutes = express.Router();
@@ -18,5 +20,8 @@ taskRoutes.get('/', getTasks); // HTTP GET
 taskRoutes.post('/tasks', addTask); // HTTP POST
 taskRoutes.patch('/tasks/:id', toggleTask); // HTTP PATCH
 taskRoutes.delete('/tasks/:id', removeTask); // HTTP DELETE
+
+taskRoutes.get('/update/tasks/:id', updateTaskPage);
+taskRoutes.put('/tasks/:id', changeTask);
 
 export default taskRoutes;

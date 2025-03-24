@@ -23,6 +23,9 @@ partial that renders the list of tasks -->
             <% } %>
           </button>
         </form>
+        <form method="GET" action="/update/tasks/<%= task.id %>">
+          <button type="submit">Update</button>
+        </form>
         <form method="POST" action="/tasks/<%= task.id %>?_method=DELETE">
           <button type="submit">Delete</button>
         </form>
