@@ -92,7 +92,7 @@ export const insertTask = async (
 
 // UPDATE
 
-export const toggleTaskCompleted = async (id: number): Promise<boolean> => {
+export const toggleCompleted = async (id: number): Promise<boolean> => {
   try {
     const result = await query(
       'UPDATE tasks SET completed = NOT completed WHERE id = $1',
@@ -101,7 +101,7 @@ export const toggleTaskCompleted = async (id: number): Promise<boolean> => {
     return Boolean(result.rowCount);
   } catch (error) {
     console.error(
-      '[taskModel/toggleTaskCompleted] Error toggling task status:',
+      '[taskModel/toggleCompleted] Error toggling task status:',
       error
     );
     throw error;
@@ -126,14 +126,14 @@ export const updateTask = async (
   }
 };
 
-// REMOVE (DELETE)
+// DELETE
 
-export const removeTask = async (id: number): Promise<boolean> => {
+export const deleteTask = async (id: number): Promise<boolean> => {
   try {
     const result = await query('DELETE FROM tasks WHERE id = $1', [id]);
     return Boolean(result.rowCount);
   } catch (error) {
-    console.error('[taskModel/removeTask] Error deleting task:', error);
+    console.error('[taskModel/deleteTask] Error deleting task:', error);
     throw error;
   }
 };

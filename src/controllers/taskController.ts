@@ -6,8 +6,8 @@ import { Request, Response } from 'express';
 import {
   insertTask,
   readTasks,
-  removeTask as deleteTask,
-  toggleTaskCompleted as toggleCompleted,
+  deleteTask,
+  toggleCompleted,
   readTask,
   updateTask,
 } from '../models/taskModel.js';
