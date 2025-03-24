@@ -4,7 +4,7 @@
 import { Request, Response } from 'express';
 
 import {
-  insertTask,
+  createTask,
   readTasks,
   deleteTask,
   toggleCompleted,
@@ -85,7 +85,7 @@ export const addTask = async (req: Request, res: Response) => {
   }
 
   try {
-    await insertTask(taskTitle, taskDescription, taskPriority);
+    await createTask(taskTitle, taskDescription, taskPriority);
     // don't redirect to previous URL in case task properties don't match applied filters
     res.redirect('/');
   } catch {
