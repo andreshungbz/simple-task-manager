@@ -5,21 +5,15 @@
 import { query } from '../config/database.js';
 import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
-import { FilterOptions } from '../types/FilterOptions.js';
-import { Priority } from '../types/Priority.js';
-import { Task } from '../types/Task.js';
+import { Task, NewTask, FilterOptions } from '../types/TaskTypes.js';
 
 // CREATE single task
-export const createTask = async (
-  title: string,
-  description: string | null = null,
-  priority: Priority
-) => {
+export const createTask = async (newTask: NewTask) => {
   try {
     return (
       await query(
         'INSERT INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
-        [title, description, priority]
+        [newTask.title, newTask.description, newTask.priority]
       )
     ).rows[0];
   } catch (error) {
@@ -79,19 +73,14 @@ export const toggleCompleted = async (id: number): Promise<boolean> => {
 };
 
 // UPDATE single task's fields
-export const updateTask = async (
-  id: number,
-  title: string,
-  description: string | null = null,
-  priority: Priority
-): Promise<boolean> => {
+export const updateTask = async (newTask: NewTask): Promise<boolean> => {
   try {
     // falsy rowCount indicates that id does not exist in the database
     return Boolean(
       (
         await query(
           'UPDATE tasks SET title = $1, description = $2, priority = $3 WHERE id = $4',
-          [title, description, priority, id]
+          [newTask.title, newTask.description, newTask.priority, newTask.id!]
         )
       ).rowCount
     );

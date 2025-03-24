@@ -12,8 +12,7 @@ import {
   updateTask,
 } from '../models/taskModel.js';
 
-import { Task } from '../types/Task.js';
-import { FilterOptions } from '../types/FilterOptions.js';
+import { NewTask, Task, FilterOptions } from '../types/TaskTypes.js';
 import taskSorter from '../utils/taskSorter.js';
 
 // GET
@@ -84,8 +83,14 @@ export const addTask = async (req: Request, res: Response) => {
     taskDescription = null;
   }
 
+  const newTask: NewTask = {
+    title: taskTitle,
+    description: taskDescription,
+    priority: taskPriority,
+  };
+
   try {
-    await createTask(taskTitle, taskDescription, taskPriority);
+    await createTask(newTask);
     // don't redirect to previous URL in case task properties don't match applied filters
     res.redirect('/');
   } catch {
@@ -235,13 +240,15 @@ export const changeTask = async (req: Request, res: Response) => {
     taskDescription = null;
   }
 
+  const newTask: NewTask = {
+    id: taskID,
+    title: taskTitle,
+    description: taskDescription,
+    priority: taskPriority,
+  };
+
   try {
-    const ok = await updateTask(
-      taskID,
-      taskTitle,
-      taskDescription,
-      taskPriority
-    );
+    const ok = await updateTask(newTask);
 
     // handle non-existent task
     if (!ok) {
