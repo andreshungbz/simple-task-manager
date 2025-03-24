@@ -3,6 +3,7 @@
 
 import express from 'express';
 import path from 'path';
+import methodOverride from 'method-override';
 
 import logger from './middleware/logger.js';
 import missingRoute from './middleware/missingRoute.js';
@@ -22,10 +23,15 @@ app.set('views', path.join(process.cwd(), 'views'));
 // static folder
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-// middleware to parse HTML form data
-app.use(express.urlencoded({ extended: true }));
-// log HTTP request details
-app.use(logger);
+// middleware
+
+// HTML forms do not support other HTTP methods other than GET and POST,
+// so the Express method-override middleware is used to override the method for the PUT/PATCH/DELETE routes
+// https://github.com/expressjs/method-override
+app.use(methodOverride('_method'));
+
+app.use(express.urlencoded({ extended: true })); // required to parse HTML form data
+app.use(logger); // log time and route of every request
 
 // routes
 app.use('/', taskRoutes);

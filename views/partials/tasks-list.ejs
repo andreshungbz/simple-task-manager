@@ -17,13 +17,13 @@ partial that renders the list of tasks -->
       </p>
       <p><%= task.description %></p>
       <div class="taskOperations">
-        <form method="POST" action="/toggle-task/<%= task.id %>">
+        <form method="POST" action="/tasks/<%= task.id %>?_method=PATCH">
           <button type="submit">
             <% if (!task.completed) { %> Complete <% } else { %> Undo Complete
             <% } %>
           </button>
         </form>
-        <form method="POST" action="/delete-task/<%= task.id %>">
+        <form method="POST" action="/tasks/<%= task.id %>?_method=DELETE">
           <button type="submit">Delete</button>
         </form>
       </div>
