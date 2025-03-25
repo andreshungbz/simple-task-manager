@@ -132,7 +132,6 @@ export const removeTask = async (req: Request, res: Response) => {
 export const updateTaskPage = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
-  console.log(id);
   if (!id) {
     return res.render('error', {
       title: 'Error: Non-numerical ID',
