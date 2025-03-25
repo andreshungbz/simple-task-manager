@@ -16,7 +16,7 @@ export const createTask = async (newTask: NewTask) => {
   try {
     return (
       await query(
-        'INSERTt INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
+        'INSERT INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
         [newTask.title, newTask.description, newTask.priority]
       )
     ).rows[0];
