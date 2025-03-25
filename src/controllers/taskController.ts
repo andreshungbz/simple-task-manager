@@ -2,7 +2,7 @@
 // business logic of task operations
 
 import { Request, Response } from 'express';
-import { NewTask, Task, FilterOptions } from '../types/TaskTypes.js';
+import { Task, FilterOptions } from '../types/TaskTypes.js';
 import taskSorter from '../utils/taskSorter.js';
 
 import {
@@ -14,6 +14,7 @@ import {
   deleteTask,
 } from '../models/taskModel.js';
 import { createFilterOptions } from '../utils/createFilterOptions.js';
+import { createNewTask } from '../utils/createNewTask.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -42,48 +43,14 @@ export const getTasks = async (req: Request, res: Response) => {
 
 // POST new task
 export const addTask = async (req: Request, res: Response) => {
-  let { taskTitle, taskDescription, taskPriority } = req.body;
-
-  // handle missing title
-  if (!taskTitle) {
-    return res.render('error', {
-      title: 'Error: Missing Title Field',
-      description:
-        "The content of the task's title was missing. Task not added.",
-    });
+  // extract task fields from request and validate
+  const result = createNewTask(req);
+  if (!result.ok) {
+    return res.render('error', result.error);
   }
-
-  // handle title length constraint
-  if (taskTitle.length < 3 || taskTitle.length > 100) {
-    return res.render('error', {
-      title: 'Error: Title Length Error',
-      description:
-        'The title must be between 3 - 100 characters. Task not added',
-    });
-  }
-
-  // handle descriptions that are too long
-  if (taskDescription && taskDescription.length > 500) {
-    return res.render('error', {
-      title: 'Error: Description Too Long',
-      description: 'The description exceeds 500 characters. Task not added.',
-    });
-  }
-
-  // null adjust in case of undefined or empty string so that null is entered to database
-  if (!taskDescription) {
-    taskDescription = null;
-  }
-
-  const newTask: NewTask = {
-    title: taskTitle,
-    description: taskDescription,
-    priority: taskPriority,
-  };
 
   try {
-    await createTask(newTask);
-    // don't redirect to previous URL in case task properties don't match applied filters
+    await createTask(result.newTask!);
     res.redirect('/');
   } catch {
     return res.render('error', {
@@ -197,48 +164,14 @@ export const changeTask = async (req: Request, res: Response) => {
     });
   }
 
-  let { taskTitle, taskDescription, taskPriority } = req.body;
-
-  // handle missing title
-  if (!taskTitle) {
-    return res.render('error', {
-      title: 'Error: Missing Title Field',
-      description:
-        "The content of the task's title was missing. Task not added.",
-    });
+  // extract task fields from request and validate
+  const result = createNewTask(req);
+  if (!result.ok) {
+    return res.render('error', result.error);
   }
-
-  // handle title length constraint
-  if (taskTitle.length < 3 || taskTitle.length > 100) {
-    return res.render('error', {
-      title: 'Error: Title Length Error',
-      description:
-        'The title must be between 3 - 100 characters. Task not added',
-    });
-  }
-
-  // handle descriptions that are too long
-  if (taskDescription && taskDescription.length > 500) {
-    return res.render('error', {
-      title: 'Error: Description Too Long',
-      description: 'The description exceeds 500 characters. Task not added.',
-    });
-  }
-
-  // null adjust in case of undefined or empty string so that null is entered to database
-  if (!taskDescription) {
-    taskDescription = null;
-  }
-
-  const newTask: NewTask = {
-    id: taskID,
-    title: taskTitle,
-    description: taskDescription,
-    priority: taskPriority,
-  };
 
   try {
-    const ok = await updateTask(newTask);
+    const ok = await updateTask(result.newTask!);
 
     // handle non-existent task
     if (!ok) {
