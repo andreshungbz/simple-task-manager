@@ -7,18 +7,27 @@ import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
 import { Task, NewTask, FilterOptions } from '../types/TaskTypes.js';
 
+import pkg from 'pg';
+import { CustomError } from '../types/CustomError.js';
+const { DatabaseError } = pkg;
+
 // CREATE single task
 export const createTask = async (newTask: NewTask) => {
   try {
     return (
       await query(
-        'INSERT INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
+        'INSERTt INTO tasks (title, description, priority) VALUES ($1, $2, $3) RETURNING *',
         [newTask.title, newTask.description, newTask.priority]
       )
     ).rows[0];
   } catch (error) {
     console.error('[taskModel/createTask]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };
 
@@ -31,7 +40,12 @@ export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
     return (await query(queryObject.query, queryObject.values)).rows;
   } catch (error) {
     console.error('[taskModel/readTasks]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };
 
@@ -44,13 +58,18 @@ export const readTask = async (id: number): Promise<Task> => {
     // throw a new error in that case
     if (!Boolean(result.rowCount)) {
       console.error('[taskModel/readTask] id does not exist in database');
-      throw new Error('ID does not exist in database');
+      throw new CustomError('ID does not exist in database', 'Database', '-1');
     }
 
     return result.rows[0];
   } catch (error) {
     console.error('[taskModel/readTask]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };
 
@@ -68,7 +87,12 @@ export const toggleCompleted = async (id: number): Promise<boolean> => {
     );
   } catch (error) {
     console.error('[taskModel/toggleCompleted]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };
 
@@ -86,7 +110,12 @@ export const updateTask = async (newTask: NewTask): Promise<boolean> => {
     );
   } catch (error) {
     console.error('[taskModel/updateTask]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };
 
@@ -99,6 +128,11 @@ export const deleteTask = async (id: number): Promise<boolean> => {
     );
   } catch (error) {
     console.error('[taskModel/deleteTask]', error);
-    throw error;
+
+    if (error instanceof DatabaseError) {
+      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+    } else {
+      throw new CustomError('unknown', 'Unknown', '-1');
+    }
   }
 };

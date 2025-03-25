@@ -17,6 +17,8 @@ import {
   updateTask,
   deleteTask,
 } from '../models/taskModel.js';
+import { renderErrorPage } from '../utils/renderErrorPage.js';
+import { CustomError } from '../types/CustomError.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -35,11 +37,8 @@ export const getTasks = async (req: Request, res: Response) => {
         priorityOrder: options.priorityOrder,
       },
     });
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
 
@@ -48,17 +47,15 @@ export const addTask = async (req: Request, res: Response) => {
   // extract task fields from request and validate
   const result = createNewTask(req);
   if (!result.ok) {
-    return res.render('error', result.error);
+    renderErrorPage(res, result.error!);
+    return;
   }
 
   try {
     await createTask(result.newTask!);
     res.redirect('/');
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
 
@@ -67,10 +64,11 @@ export const toggleTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    return res.render('error', {
-      title: 'Error: Non-numerical ID',
-      description: 'Task ID should be a number. Task not processed.',
-    });
+    renderErrorPage(
+      res,
+      new CustomError('Task ID should be a number.', 'Validation', '-5')
+    );
+    return;
   }
 
   try {
@@ -78,20 +76,18 @@ export const toggleTask = async (req: Request, res: Response) => {
 
     // handle non-existent task
     if (!ok) {
-      return res.render('error', {
-        title: 'Error: Non-existent Task',
-        description: 'Task does not exist in list. Task not processed.',
-      });
+      renderErrorPage(
+        res,
+        new CustomError('Task does not exist in database.', 'Database', '-6')
+      );
+      return;
     }
 
     // redirect to previous URL
     const referer = req.get('Referer');
     res.redirect(referer || '/');
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
 
@@ -100,10 +96,11 @@ export const removeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    return res.render('error', {
-      title: 'Error: Non-numerical ID',
-      description: 'Task ID should be a number. Task not processed.',
-    });
+    renderErrorPage(
+      res,
+      new CustomError('Task ID should be a number.', 'Validation', '-5')
+    );
+    return;
   }
 
   try {
@@ -111,20 +108,18 @@ export const removeTask = async (req: Request, res: Response) => {
 
     // handle non-existent task
     if (!ok) {
-      return res.render('error', {
-        title: 'Error: Non-existent Task',
-        description: 'Task does not exist in list. Task not processed.',
-      });
+      renderErrorPage(
+        res,
+        new CustomError('Task does not exist in database.', 'Database', '-6')
+      );
+      return;
     }
 
     // redirect to previous URL
     const referer = req.get('Referer');
     res.redirect(referer || '/');
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
 
@@ -133,21 +128,18 @@ export const updateTaskPage = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    return res.render('error', {
-      title: 'Error: Non-numerical ID',
-      description: 'Task ID should be a number. Task not processed.',
-    });
+    renderErrorPage(
+      res,
+      new CustomError('Task ID should be a number.', 'Validation', '-5')
+    );
+    return;
   }
 
   try {
     const task = await readTask(id);
-
     res.render('update-task-form', { task });
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
 
@@ -156,10 +148,11 @@ export const changeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    return res.render('error', {
-      title: 'Error: Non-numerical ID',
-      description: 'Task ID should be a number. Task not processed.',
-    });
+    renderErrorPage(
+      res,
+      new CustomError('Task ID should be a number.', 'Validation', '-5')
+    );
+    return;
   }
 
   // extract task fields from request and validate
@@ -174,17 +167,12 @@ export const changeTask = async (req: Request, res: Response) => {
 
     // handle non-existent task
     if (!ok) {
-      return res.render('error', {
-        title: 'Error: Non-existent Task',
-        description: 'Task does not exist in list. Task not processed.',
-      });
+      renderErrorPage(res, result.error!);
+      return;
     }
 
     res.redirect('/');
-  } catch {
-    return res.render('error', {
-      title: 'Internal Database Error',
-      description: 'Sorry! Something went wrong! Please try again.',
-    });
+  } catch (error) {
+    if (error instanceof CustomError) renderErrorPage(res, error);
   }
 };
