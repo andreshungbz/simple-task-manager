@@ -13,26 +13,23 @@ import {
   updateTask,
   deleteTask,
 } from '../models/taskModel.js';
+import { createFilterOptions } from '../utils/createFilterOptions.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
-  const search = req.query.search ? String(req.query.search) : null;
-  const category = req.query.category ? String(req.query.category) : 'all';
-  const priorityOrder = req.query.priorityOrder
-    ? String(req.query.priorityOrder)
-    : null;
+  // parse request to get filter options
+  const options: FilterOptions = createFilterOptions(req);
 
-  const options: FilterOptions = { search, category, priorityOrder };
   try {
     const tasks: Task[] = await readTasks(options);
-    tasks.sort(taskSorter); // always sort
+    tasks.sort(taskSorter); // always sort rendered tasks
 
     res.render('index', {
       tasks,
       filter: {
-        search,
-        category,
-        priorityOrder: priorityOrder,
+        search: options.search,
+        category: options.category,
+        priorityOrder: options.priorityOrder,
       },
     });
   } catch {
