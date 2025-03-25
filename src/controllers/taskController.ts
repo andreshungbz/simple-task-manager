@@ -19,11 +19,7 @@ import {
   deleteTask,
 } from '../models/taskModel.js';
 
-import {
-  renderErrorPage,
-  renderInvalidID,
-  renderNonExistentTask,
-} from '../utils/renderErrorPage.js';
+import { renderErrorPage, renderInvalidID } from '../utils/renderErrorPage.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -74,16 +70,8 @@ export const toggleTask = async (req: Request, res: Response) => {
   }
 
   try {
-    const ok = await toggleCompleted(id);
-
-    // handle non-existent task
-    if (!ok) {
-      renderNonExistentTask(res);
-      return;
-    }
-
-    // redirect to previous URL
-    const referer = req.get('Referer');
+    await toggleCompleted(id);
+    const referer = req.get('Referer'); // redirect to previous URL
     res.redirect(referer || '/');
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);
@@ -100,16 +88,8 @@ export const removeTask = async (req: Request, res: Response) => {
   }
 
   try {
-    const ok = await deleteTask(id);
-
-    // handle non-existent task
-    if (!ok) {
-      renderNonExistentTask(res);
-      return;
-    }
-
-    // redirect to previous URL
-    const referer = req.get('Referer');
+    await deleteTask(id);
+    const referer = req.get('Referer'); // redirect to previous URL
     res.redirect(referer || '/');
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);
@@ -150,14 +130,7 @@ export const changeTask = async (req: Request, res: Response) => {
 
   result.newTask!.id = id;
   try {
-    const ok = await updateTask(result.newTask!);
-
-    // handle non-existent task
-    if (!ok) {
-      renderErrorPage(res, result.error!);
-      return;
-    }
-
+    await updateTask(result.newTask!);
     res.redirect('/');
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);

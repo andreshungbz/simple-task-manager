@@ -44,7 +44,7 @@ export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
     } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+      throw error;
     }
   }
 };
@@ -77,65 +77,79 @@ export const readTask = async (id: number): Promise<Task> => {
 };
 
 // UPDATE (toggle) single task completion status
-export const toggleCompleted = async (id: number): Promise<boolean> => {
+export const toggleCompleted = async (id: number) => {
   try {
-    // falsy rowCount indicates that id does not exist in the database
-    return Boolean(
-      (
-        await query(
-          'UPDATE tasks SET completed = NOT completed WHERE id = $1',
-          [id]
-        )
-      ).rowCount
+    const result = await query(
+      'UPDATE tasks SET completed = NOT completed WHERE id = $1',
+      [id]
     );
+
+    // falsy rowCount indicates that id does not exist in the database
+    if (!Boolean(result.rowCount)) {
+      throw new CustomError(
+        'Task does not exist in database.',
+        'Database',
+        '-6'
+      );
+    }
   } catch (error) {
     console.error('[taskModel/toggleCompleted]', error);
 
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
     } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+      throw error;
     }
   }
 };
 
 // UPDATE single task's fields
-export const updateTask = async (newTask: NewTask): Promise<boolean> => {
+export const updateTask = async (newTask: NewTask) => {
   try {
-    // falsy rowCount indicates that id does not exist in the database
-    return Boolean(
-      (
-        await query(
-          'UPDATE tasks SET title = $1, description = $2, priority = $3 WHERE id = $4',
-          [newTask.title, newTask.description, newTask.priority, newTask.id!]
-        )
-      ).rowCount
+    const result = await query(
+      'UPDATE tasks SET title = $1, description = $2, priority = $3 WHERE id = $4',
+      [newTask.title, newTask.description, newTask.priority, newTask.id!]
     );
+
+    // falsy rowCount indicates that id does not exist in the database
+    if (!Boolean(result.rowCount)) {
+      throw new CustomError(
+        'Task does not exist in database.',
+        'Database',
+        '-6'
+      );
+    }
   } catch (error) {
     console.error('[taskModel/updateTask]', error);
 
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
     } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+      throw error;
     }
   }
 };
 
 // DELETE single task
-export const deleteTask = async (id: number): Promise<boolean> => {
+export const deleteTask = async (id: number) => {
   try {
+    const result = await query('DELETE FROM tasks WHERE id = $1', [id]);
+
     // falsy rowCount indicates that id does not exist in the database
-    return Boolean(
-      (await query('DELETE FROM tasks WHERE id = $1', [id])).rowCount
-    );
+    if (!Boolean(result.rowCount)) {
+      throw new CustomError(
+        'Task does not exist in database.',
+        'Database',
+        '-6'
+      );
+    }
   } catch (error) {
     console.error('[taskModel/deleteTask]', error);
 
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
     } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+      throw error;
     }
   }
 };
