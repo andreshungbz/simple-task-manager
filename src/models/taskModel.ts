@@ -67,8 +67,8 @@ export const readTask = async (id: number): Promise<Task> => {
 
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
-    } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+    } else if (error instanceof CustomError) {
+      throw error;
     }
   }
 };
