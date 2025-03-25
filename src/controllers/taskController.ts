@@ -3,7 +3,11 @@
 
 import { Request, Response } from 'express';
 import { Task, FilterOptions } from '../types/TaskTypes.js';
+
 import taskSorter from '../utils/taskSorter.js';
+import { createFilterOptions } from '../utils/createFilterOptions.js';
+import { createNewTask } from '../utils/createNewTask.js';
+import { extractValidID } from '../utils/extractValidID.js';
 
 import {
   createTask,
@@ -13,8 +17,6 @@ import {
   updateTask,
   deleteTask,
 } from '../models/taskModel.js';
-import { createFilterOptions } from '../utils/createFilterOptions.js';
-import { createNewTask } from '../utils/createNewTask.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -62,10 +64,9 @@ export const addTask = async (req: Request, res: Response) => {
 
 // PATCH task's completed status
 export const toggleTask = async (req: Request, res: Response) => {
-  const taskID = Number(req.params.id);
-
-  // handle non-numerical ID
-  if (isNaN(taskID)) {
+  // extract and validate id from request
+  const id = extractValidID(req);
+  if (!id) {
     return res.render('error', {
       title: 'Error: Non-numerical ID',
       description: 'Task ID should be a number. Task not processed.',
@@ -73,7 +74,7 @@ export const toggleTask = async (req: Request, res: Response) => {
   }
 
   try {
-    const ok = await toggleCompleted(taskID);
+    const ok = await toggleCompleted(id);
 
     // handle non-existent task
     if (!ok) {
@@ -96,10 +97,9 @@ export const toggleTask = async (req: Request, res: Response) => {
 
 // DELETE task
 export const removeTask = async (req: Request, res: Response) => {
-  const taskID = Number(req.params.id);
-
-  // handle non-numerical ID
-  if (isNaN(taskID)) {
+  // extract and validate id from request
+  const id = extractValidID(req);
+  if (!id) {
     return res.render('error', {
       title: 'Error: Non-numerical ID',
       description: 'Task ID should be a number. Task not processed.',
@@ -107,7 +107,7 @@ export const removeTask = async (req: Request, res: Response) => {
   }
 
   try {
-    const ok = await deleteTask(taskID);
+    const ok = await deleteTask(id);
 
     // handle non-existent task
     if (!ok) {
@@ -130,10 +130,10 @@ export const removeTask = async (req: Request, res: Response) => {
 
 // GET page for updating a task's fields (except completed)
 export const updateTaskPage = async (req: Request, res: Response) => {
-  const taskID = Number(req.params.id);
-
-  // handle non-numerical ID
-  if (isNaN(taskID)) {
+  // extract and validate id from request
+  const id = extractValidID(req);
+  console.log(id);
+  if (!id) {
     return res.render('error', {
       title: 'Error: Non-numerical ID',
       description: 'Task ID should be a number. Task not processed.',
@@ -141,7 +141,7 @@ export const updateTaskPage = async (req: Request, res: Response) => {
   }
 
   try {
-    const task = await readTask(taskID);
+    const task = await readTask(id);
 
     res.render('update-task-form', { task });
   } catch {
@@ -154,10 +154,9 @@ export const updateTaskPage = async (req: Request, res: Response) => {
 
 // PUT new task fields
 export const changeTask = async (req: Request, res: Response) => {
-  const taskID = Number(req.params.id);
-
-  // handle non-numerical ID
-  if (isNaN(taskID)) {
+  // extract and validate id from request
+  const id = extractValidID(req);
+  if (!id) {
     return res.render('error', {
       title: 'Error: Non-numerical ID',
       description: 'Task ID should be a number. Task not processed.',
@@ -170,6 +169,7 @@ export const changeTask = async (req: Request, res: Response) => {
     return res.render('error', result.error);
   }
 
+  result.newTask!.id = id;
   try {
     const ok = await updateTask(result.newTask!);
 
