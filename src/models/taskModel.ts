@@ -57,7 +57,6 @@ export const readTask = async (id: number): Promise<Task> => {
     // if an id that does not exist in the database is queried, query technically succeeds but returns 0 rows
     // throw a new error in that case
     if (!Boolean(result.rowCount)) {
-      console.error('[taskModel/readTask] id does not exist in database');
       throw new CustomError(
         'Task does not exist in database.',
         'Database',
