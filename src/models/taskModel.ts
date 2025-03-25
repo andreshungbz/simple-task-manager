@@ -6,9 +6,9 @@ import { query } from '../config/database.js';
 import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
 import { Task, NewTask, FilterOptions } from '../types/TaskTypes.js';
+import { CustomError } from '../types/CustomError.js';
 
 import pkg from 'pg';
-import { CustomError } from '../types/CustomError.js';
 const { DatabaseError } = pkg;
 
 // CREATE single task

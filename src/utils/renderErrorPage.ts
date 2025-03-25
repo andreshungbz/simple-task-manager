@@ -11,3 +11,17 @@ export const renderErrorPage = (res: Response, error: CustomError) => {
     description: error.message,
   });
 };
+
+export const renderInvalidID = (res: Response) => {
+  renderErrorPage(
+    res,
+    new CustomError('Task ID should be a number.', 'Validation', '-5')
+  );
+};
+
+export const renderNonExistentTask = (res: Response) => {
+  renderErrorPage(
+    res,
+    new CustomError('Task does not exist in database.', 'Database', '-6')
+  );
+};

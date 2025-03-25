@@ -8,6 +8,7 @@ import taskSorter from '../utils/taskSorter.js';
 import { createFilterOptions } from '../utils/createFilterOptions.js';
 import { createNewTask } from '../utils/createNewTask.js';
 import { extractValidID } from '../utils/extractValidID.js';
+import { CustomError } from '../types/CustomError.js';
 
 import {
   createTask,
@@ -17,8 +18,12 @@ import {
   updateTask,
   deleteTask,
 } from '../models/taskModel.js';
-import { renderErrorPage } from '../utils/renderErrorPage.js';
-import { CustomError } from '../types/CustomError.js';
+
+import {
+  renderErrorPage,
+  renderInvalidID,
+  renderNonExistentTask,
+} from '../utils/renderErrorPage.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -64,10 +69,7 @@ export const toggleTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderErrorPage(
-      res,
-      new CustomError('Task ID should be a number.', 'Validation', '-5')
-    );
+    renderInvalidID(res);
     return;
   }
 
@@ -76,10 +78,7 @@ export const toggleTask = async (req: Request, res: Response) => {
 
     // handle non-existent task
     if (!ok) {
-      renderErrorPage(
-        res,
-        new CustomError('Task does not exist in database.', 'Database', '-6')
-      );
+      renderNonExistentTask(res);
       return;
     }
 
@@ -96,10 +95,7 @@ export const removeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderErrorPage(
-      res,
-      new CustomError('Task ID should be a number.', 'Validation', '-5')
-    );
+    renderInvalidID(res);
     return;
   }
 
@@ -108,10 +104,7 @@ export const removeTask = async (req: Request, res: Response) => {
 
     // handle non-existent task
     if (!ok) {
-      renderErrorPage(
-        res,
-        new CustomError('Task does not exist in database.', 'Database', '-6')
-      );
+      renderNonExistentTask(res);
       return;
     }
 
@@ -128,10 +121,7 @@ export const updateTaskPage = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderErrorPage(
-      res,
-      new CustomError('Task ID should be a number.', 'Validation', '-5')
-    );
+    renderInvalidID(res);
     return;
   }
 
@@ -148,10 +138,7 @@ export const changeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderErrorPage(
-      res,
-      new CustomError('Task ID should be a number.', 'Validation', '-5')
-    );
+    renderInvalidID(res);
     return;
   }
 
