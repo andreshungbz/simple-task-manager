@@ -6,10 +6,13 @@ import { Task, FilterOptions } from '../lib/TaskTypes.js';
 import { CustomError } from '../lib/CustomErrors.js';
 
 import taskSorter from '../utils/taskSorter.js';
-import createFilterOptions from '../utils/createFilterOptions.js';
-import createNewTask from '../utils/createNewTask.js';
-import extractValidID from '../utils/extractValidID.js';
 import renderErrorPage from '../utils/renderErrorPage.js';
+
+import {
+  createFilterOptions,
+  createNewTask,
+  extractValidID,
+} from '../utils/reqUtils.js';
 
 import {
   createTask,
