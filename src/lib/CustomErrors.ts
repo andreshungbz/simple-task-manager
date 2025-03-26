@@ -20,6 +20,12 @@ export class CustomError extends Error {
 
 export const UnknownError = new CustomError('unknown', 'Unknown', '-1');
 
+export const NonexistentPage404Error = new CustomError(
+  'Page not found',
+  'Application',
+  '404'
+);
+
 export const NonexistentTaskError = new CustomError(
   'Task with specified ID does not exist in database.',
   'Database',
