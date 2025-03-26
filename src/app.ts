@@ -16,8 +16,6 @@ import getLocalIPAddress from './utils/getLocalIPAddress.js';
 
 const app = express();
 
-export const baseUrl = `http://${getLocalIPAddress()}:${config.port}`;
-
 // EJS templating
 app.set('view engine', 'ejs');
 app.set('views', path.join(process.cwd(), 'views'));
@@ -42,7 +40,5 @@ app.use('/', infoRoutes);
 // handle non-existent routes
 app.use(missingRoute);
 
-// start server
-app.listen(config.port, () => {
-  console.log(`[${config.abbreviation}] ${config.name} running at ${baseUrl}`);
-});
+export const baseUrl = `http://${getLocalIPAddress()}:${config.port}`;
+export default app;
