@@ -5,9 +5,11 @@
 import { Response } from 'express';
 import { CustomError } from '../lib/CustomErrors.js';
 
-export const renderErrorPage = (res: Response, error: CustomError) => {
+const renderErrorPage = (res: Response, error: CustomError) => {
   res.render('error', {
     title: `${error.category} Error ${error.code}`,
     description: error.message,
   });
 };
+
+export default renderErrorPage;

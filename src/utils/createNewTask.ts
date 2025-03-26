@@ -4,8 +4,9 @@
 
 import { Request } from 'express';
 import { NewTask } from '../lib/TaskTypes.js';
-import { CustomError } from '../lib/CustomErrors.js';
+
 import {
+  CustomError,
   DescriptionLengthError,
   MissingTitleError,
   TitleLengthError,
@@ -17,7 +18,7 @@ interface Result {
   error?: CustomError;
 }
 
-export const createNewTask = (req: Request): Result => {
+const createNewTask = (req: Request): Result => {
   const result: Result = { ok: false };
   let { taskTitle, taskDescription, taskPriority } = req.body;
 
@@ -54,3 +55,5 @@ export const createNewTask = (req: Request): Result => {
 
   return result;
 };
+
+export default createNewTask;

@@ -3,12 +3,13 @@
 
 import { Request, Response } from 'express';
 import { Task, FilterOptions } from '../lib/TaskTypes.js';
+import { CustomError, NonNumberIDParamError } from '../lib/CustomErrors.js';
 
 import taskSorter from '../utils/taskSorter.js';
-import { createFilterOptions } from '../utils/createFilterOptions.js';
-import { createNewTask } from '../utils/createNewTask.js';
-import { extractValidID } from '../utils/extractValidID.js';
-import { CustomError } from '../lib/CustomErrors.js';
+import createFilterOptions from '../utils/createFilterOptions.js';
+import createNewTask from '../utils/createNewTask.js';
+import extractValidID from '../utils/extractValidID.js';
+import renderErrorPage from '../utils/renderErrorPage.js';
 
 import {
   createTask,
@@ -18,9 +19,6 @@ import {
   updateTask,
   deleteTask,
 } from '../models/taskModel.js';
-
-import { renderErrorPage } from '../utils/renderErrorPage.js';
-import { NonNumberIDParamError } from '../lib/CustomErrors.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {

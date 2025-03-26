@@ -4,7 +4,7 @@
 
 import { FilterOptions } from '../lib/TaskTypes.js';
 
-export const createPGTaskSELECT = (
+const createPGTaskSELECT = (
   options: FilterOptions
 ): { query: string; values: (string | null)[] } => {
   // initial variables
@@ -39,3 +39,5 @@ export const createPGTaskSELECT = (
 
   return { query, values };
 };
+
+export default createPGTaskSELECT;

@@ -3,7 +3,7 @@
 
 import os from 'node:os';
 
-export const getLocalIPAddress = (): string => {
+const getLocalIPAddress = (): string => {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
     const ifaceList = interfaces[name];
@@ -17,3 +17,5 @@ export const getLocalIPAddress = (): string => {
   }
   return 'localhost';
 };
+
+export default getLocalIPAddress;

@@ -2,14 +2,18 @@
 // database implementation of task operations
 // functions are ordered by CRUD
 
+import pkg from 'pg';
 import { query } from '../config/database.js';
-import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
 import { Task, NewTask, FilterOptions } from '../lib/TaskTypes.js';
-import { CustomError } from '../lib/CustomErrors.js';
-import { NonexistentTaskError, UnknownError } from '../lib/CustomErrors.js';
+import createPGTaskSELECT from '../utils/createPGTaskSELECT.js';
 
-import pkg from 'pg';
+import {
+  CustomError,
+  NonexistentTaskError,
+  UnknownError,
+} from '../lib/CustomErrors.js';
+
 const { DatabaseError } = pkg;
 
 // CREATE single task

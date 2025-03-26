@@ -4,9 +4,11 @@
 
 import { Request } from 'express';
 
-export const extractValidID = (req: Request): number | null => {
+const extractValidID = (req: Request): number | null => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID and 0/negative values
   return isNaN(taskID) || taskID < 1 ? null : taskID;
 };
+
+export default extractValidID;

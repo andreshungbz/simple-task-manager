@@ -4,7 +4,7 @@
 import { Request } from 'express';
 import { FilterOptions } from '../lib/TaskTypes.js';
 
-export const createFilterOptions = (req: Request): FilterOptions => {
+const createFilterOptions = (req: Request): FilterOptions => {
   return {
     search: req.query.search ? String(req.query.search) : null,
     category: req.query.category ? String(req.query.category) : 'all',
@@ -13,3 +13,5 @@ export const createFilterOptions = (req: Request): FilterOptions => {
       : null,
   };
 };
+
+export default createFilterOptions;

@@ -12,7 +12,7 @@ import taskRoutes from './routes/taskRoutes.js';
 import infoRoutes from './routes/infoRoutes.js';
 
 import { config } from './config/app.config.js';
-import { getLocalIPAddress } from './utils/getLocalIPAddress.js';
+import getLocalIPAddress from './utils/getLocalIPAddress.js';
 
 const app = express();
 
