@@ -5,53 +5,71 @@
 // CLASS
 
 export class CustomError extends Error {
+  httpErrorCode: number;
+  appErrorCode: string;
   category: string;
-  code: string;
 
-  constructor(message: string, category: string, code: string) {
+  constructor(
+    message: string,
+    httpCode: number,
+    appCode: string,
+    category: string
+  ) {
     super(message);
+    this.httpErrorCode = httpCode;
+    this.appErrorCode = appCode;
     this.category = category;
-    this.code = code;
     this.name = 'CustomError';
   }
 }
 
 // INSTANCES
 
-export const UnknownError = new CustomError('unknown', 'Unknown', '-1');
+export const UnknownError = new CustomError(
+  'Something went wrong!',
+  500,
+  'STM-X',
+  'Unknown'
+);
 
 export const NonexistentPage404Error = new CustomError(
-  'Page not found',
-  'Application',
-  '404'
+  'Requested page does not exist.',
+  404,
+  'STM-404',
+  'Page'
 );
 
 export const NonexistentTaskError = new CustomError(
-  'Task with specified ID does not exist in database.',
-  'Database',
-  '-6'
+  'Task with the specified ID does not exist in the database.',
+  400,
+  'STM-NO-TASK',
+  'Database'
 );
 
 export const NonNumberIDParamError = new CustomError(
-  'Task ID should be a number.',
-  'Validation',
-  '-5'
+  'Task ID in the URL should be a number.',
+  400,
+  'STM-NO-NUMBER-ID',
+  'Validation'
 );
 
 export const MissingTitleError = new CustomError(
-  `The content of the task's title was missing.`,
-  'Validation',
-  '-2'
+  `Task title missing. It is required.`,
+  400,
+  'STM-TITLE-REQUIRED',
+  'Validation'
 );
 
 export const TitleLengthError = new CustomError(
-  `The title must be between 3 - 100 characters.`,
-  'Validation',
-  '-3'
+  `Task title must be between 3 - 100 characters.`,
+  400,
+  'STM-TITLE-LENGTH',
+  'Validation'
 );
 
 export const DescriptionLengthError = new CustomError(
-  `The description exceeds 500 characters.`,
-  'Validation',
-  '-4'
+  `Task description exceeds 500 characters.`,
+  400,
+  'STM-DESC-LENGTH',
+  'Validation'
 );

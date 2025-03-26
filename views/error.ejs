@@ -5,15 +5,16 @@ customizable error page -->
 <html lang="en">
   <head>
     <%- include('partials/common-meta') %>
-    <title><%= title %> | <%= description %></title>
+    <title><%= category %> Error <%= code %></title>
   </head>
   <body>
     <div class="app">
       <%- include('partials/header') %>
       <main>
         <div class="message">
-          <h2><%= title %></h2>
-          <p><%= description %></p>
+          <h2><%= category %> Error</h2>
+          <p>Error Code: <%= code %></p>
+          <p>Message: <%= message %></p>
         </div>
       </main>
       <%- include('partials/footer') %>

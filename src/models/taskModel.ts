@@ -28,7 +28,7 @@ export const createTask = async (newTask: NewTask) => {
   } catch (error) {
     console.error('[taskModel/createTask]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw UnknownError;
     }
@@ -43,7 +43,7 @@ export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
   } catch (error) {
     console.error('[taskModel/readTasks]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw error;
     }
@@ -59,7 +59,7 @@ export const readTask = async (id: number): Promise<Task> => {
   } catch (error) {
     console.error('[taskModel/readTask]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw error;
     }
@@ -77,7 +77,7 @@ export const toggleCompleted = async (id: number) => {
   } catch (error) {
     console.error('[taskModel/toggleCompleted]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw error;
     }
@@ -95,7 +95,7 @@ export const updateTask = async (newTask: NewTask) => {
   } catch (error) {
     console.error('[taskModel/updateTask]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw error;
     }
@@ -110,7 +110,7 @@ export const deleteTask = async (id: number) => {
   } catch (error) {
     console.error('[taskModel/deleteTask]', error);
     if (error instanceof DatabaseError) {
-      throw new CustomError(error.message, 'Database', error.code || 'unknown');
+      throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
       throw error;
     }
