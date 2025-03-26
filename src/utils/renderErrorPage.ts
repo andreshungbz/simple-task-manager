@@ -3,7 +3,7 @@
 // ensure the calling function calls return if necessary
 
 import { Response } from 'express';
-import { CustomError } from '../types/CustomErrors.js';
+import { CustomError } from '../lib/CustomErrors.js';
 
 export const renderErrorPage = (res: Response, error: CustomError) => {
   res.render('error', {

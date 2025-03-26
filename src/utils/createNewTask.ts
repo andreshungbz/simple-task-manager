@@ -3,13 +3,13 @@
 // validation is done here
 
 import { Request } from 'express';
-import { NewTask } from '../types/TaskTypes.js';
-import { CustomError } from '../types/CustomErrors.js';
+import { NewTask } from '../lib/TaskTypes.js';
+import { CustomError } from '../lib/CustomErrors.js';
 import {
   DescriptionLengthError,
   MissingTitleError,
   TitleLengthError,
-} from '../types/CustomErrors.js';
+} from '../lib/CustomErrors.js';
 
 interface Result {
   newTask?: NewTask;

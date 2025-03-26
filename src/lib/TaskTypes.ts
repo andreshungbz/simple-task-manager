@@ -1,7 +1,7 @@
 // Filename: TaskTypes.ts
 // interfaces for task types and options
 
-import { Priority } from './Priority.js';
+import { Priority } from './PriorityEnum.js';
 
 // used for tasks retrieved from the database
 export interface Task {

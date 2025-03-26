@@ -5,9 +5,9 @@
 import { query } from '../config/database.js';
 import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
-import { Task, NewTask, FilterOptions } from '../types/TaskTypes.js';
-import { CustomError } from '../types/CustomErrors.js';
-import { NonexistentTaskError, UnknownError } from '../types/CustomErrors.js';
+import { Task, NewTask, FilterOptions } from '../lib/TaskTypes.js';
+import { CustomError } from '../lib/CustomErrors.js';
+import { NonexistentTaskError, UnknownError } from '../lib/CustomErrors.js';
 
 import pkg from 'pg';
 const { DatabaseError } = pkg;

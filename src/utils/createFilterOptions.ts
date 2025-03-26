@@ -2,7 +2,7 @@
 // function that takes an Express request and parses the format options
 
 import { Request } from 'express';
-import { FilterOptions } from '../types/TaskTypes.js';
+import { FilterOptions } from '../lib/TaskTypes.js';
 
 export const createFilterOptions = (req: Request): FilterOptions => {
   return {

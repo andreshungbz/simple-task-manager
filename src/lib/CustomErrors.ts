@@ -1,4 +1,4 @@
-// Filename: CustomErros.ts
+// Filename: CustomErrors.ts
 // custom error class for use in rendering the error page
 // and exported custom errors
 

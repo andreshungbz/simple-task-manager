@@ -2,13 +2,13 @@
 // business logic of task operations
 
 import { Request, Response } from 'express';
-import { Task, FilterOptions } from '../types/TaskTypes.js';
+import { Task, FilterOptions } from '../lib/TaskTypes.js';
 
 import taskSorter from '../utils/taskSorter.js';
 import { createFilterOptions } from '../utils/createFilterOptions.js';
 import { createNewTask } from '../utils/createNewTask.js';
 import { extractValidID } from '../utils/extractValidID.js';
-import { CustomError } from '../types/CustomErrors.js';
+import { CustomError } from '../lib/CustomErrors.js';
 
 import {
   createTask,
@@ -20,7 +20,7 @@ import {
 } from '../models/taskModel.js';
 
 import { renderErrorPage } from '../utils/renderErrorPage.js';
-import { NonNumberIDParamError } from '../types/CustomErrors.js';
+import { NonNumberIDParamError } from '../lib/CustomErrors.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {

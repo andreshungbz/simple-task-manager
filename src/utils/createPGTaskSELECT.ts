@@ -2,7 +2,7 @@
 // function that takes search, category, and priority order parameters
 // and returns and object with the SQL query string and values for PG
 
-import { FilterOptions } from '../types/TaskTypes.js';
+import { FilterOptions } from '../lib/TaskTypes.js';
 
 export const createPGTaskSELECT = (
   options: FilterOptions
