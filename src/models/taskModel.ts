@@ -6,7 +6,7 @@ import pkg from 'pg';
 import { query } from '../config/database.js';
 
 import { Task, NewTask, FilterOptions } from '../lib/TaskTypes.js';
-import createPGTaskSELECT from '../utils/createPGTaskSELECT.js';
+import constructPGTaskSELECT from '../utils/constructPGTaskSELECT.js';
 
 import {
   CustomError,
@@ -37,7 +37,7 @@ export const createTask = async (newTask: NewTask) => {
 
 // READ multiple tasks
 export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
-  const queryObject = createPGTaskSELECT(options); // create the appropriate query string and values array based on the filter options
+  const queryObject = constructPGTaskSELECT(options); // create the appropriate query string and values array based on the filter options
   try {
     return (await query(queryObject.query, queryObject.values)).rows;
   } catch (error) {

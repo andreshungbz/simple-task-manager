@@ -1,10 +1,10 @@
-// Filename: createPGTaskSELECT.ts
+// Filename: constructPGTaskSELECT.ts
 // function that takes search, category, and priority order parameters
 // and returns and object with the SQL query string and values for PG
 
 import { FilterOptions } from '../lib/TaskTypes.js';
 
-const createPGTaskSELECT = (
+const constructPGTaskSELECT = (
   options: FilterOptions
 ): { query: string; values: (string | null)[] } => {
   // initial variables
@@ -40,4 +40,4 @@ const createPGTaskSELECT = (
   return { query, values };
 };
 
-export default createPGTaskSELECT;
+export default constructPGTaskSELECT;
