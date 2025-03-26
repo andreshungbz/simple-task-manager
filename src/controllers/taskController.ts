@@ -8,7 +8,7 @@ import taskSorter from '../utils/taskSorter.js';
 import { createFilterOptions } from '../utils/createFilterOptions.js';
 import { createNewTask } from '../utils/createNewTask.js';
 import { extractValidID } from '../utils/extractValidID.js';
-import { CustomError } from '../types/CustomError.js';
+import { CustomError } from '../types/CustomErrors.js';
 
 import {
   createTask,
@@ -19,7 +19,8 @@ import {
   deleteTask,
 } from '../models/taskModel.js';
 
-import { renderErrorPage, renderInvalidID } from '../utils/renderErrorPage.js';
+import { renderErrorPage } from '../utils/renderErrorPage.js';
+import { NonNumberIDParamError } from '../types/CustomErrors.js';
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
@@ -65,7 +66,7 @@ export const toggleTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderInvalidID(res);
+    renderErrorPage(res, NonNumberIDParamError);
     return;
   }
 
@@ -83,7 +84,7 @@ export const removeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderInvalidID(res);
+    renderErrorPage(res, NonNumberIDParamError);
     return;
   }
 
@@ -101,7 +102,7 @@ export const updateTaskPage = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderInvalidID(res);
+    renderErrorPage(res, NonNumberIDParamError);
     return;
   }
 
@@ -118,7 +119,7 @@ export const changeTask = async (req: Request, res: Response) => {
   // extract and validate id from request
   const id = extractValidID(req);
   if (!id) {
-    renderInvalidID(res);
+    renderErrorPage(res, NonNumberIDParamError);
     return;
   }
 

@@ -6,7 +6,8 @@ import { query } from '../config/database.js';
 import { createPGTaskSELECT } from '../utils/createPGTaskSELECT.js';
 
 import { Task, NewTask, FilterOptions } from '../types/TaskTypes.js';
-import { CustomError } from '../types/CustomError.js';
+import { CustomError } from '../types/CustomErrors.js';
+import { NonexistentTaskError, UnknownError } from '../types/CustomErrors.js';
 
 import pkg from 'pg';
 const { DatabaseError } = pkg;
@@ -26,7 +27,7 @@ export const createTask = async (newTask: NewTask) => {
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 'Database', error.code || 'unknown');
     } else {
-      throw new CustomError('unknown', 'Unknown', '-1');
+      throw UnknownError;
     }
   }
 };
@@ -57,11 +58,7 @@ export const readTask = async (id: number): Promise<Task> => {
     // if an id that does not exist in the database is queried, query technically succeeds but returns 0 rows
     // throw a new error in that case
     if (!Boolean(result.rowCount)) {
-      throw new CustomError(
-        'Task does not exist in database.',
-        'Database',
-        '-6'
-      );
+      throw NonexistentTaskError;
     }
 
     return result.rows[0];
@@ -86,11 +83,7 @@ export const toggleCompleted = async (id: number) => {
 
     // falsy rowCount indicates that id does not exist in the database
     if (!Boolean(result.rowCount)) {
-      throw new CustomError(
-        'Task does not exist in database.',
-        'Database',
-        '-6'
-      );
+      throw NonexistentTaskError;
     }
   } catch (error) {
     console.error('[taskModel/toggleCompleted]', error);
@@ -113,11 +106,7 @@ export const updateTask = async (newTask: NewTask) => {
 
     // falsy rowCount indicates that id does not exist in the database
     if (!Boolean(result.rowCount)) {
-      throw new CustomError(
-        'Task does not exist in database.',
-        'Database',
-        '-6'
-      );
+      throw NonexistentTaskError;
     }
   } catch (error) {
     console.error('[taskModel/updateTask]', error);
@@ -137,11 +126,7 @@ export const deleteTask = async (id: number) => {
 
     // falsy rowCount indicates that id does not exist in the database
     if (!Boolean(result.rowCount)) {
-      throw new CustomError(
-        'Task does not exist in database.',
-        'Database',
-        '-6'
-      );
+      throw NonexistentTaskError;
     }
   } catch (error) {
     console.error('[taskModel/deleteTask]', error);

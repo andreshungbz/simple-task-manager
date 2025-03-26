@@ -4,7 +4,12 @@
 
 import { Request } from 'express';
 import { NewTask } from '../types/TaskTypes.js';
-import { CustomError } from '../types/CustomError.js';
+import { CustomError } from '../types/CustomErrors.js';
+import {
+  DescriptionLengthError,
+  MissingTitleError,
+  TitleLengthError,
+} from '../types/CustomErrors.js';
 
 interface Result {
   newTask?: NewTask;
@@ -18,34 +23,19 @@ export const createNewTask = (req: Request): Result => {
 
   // handle missing title
   if (!taskTitle) {
-    result.error = new CustomError(
-      `The content of the task's title was missing.`,
-      'Validation',
-      '-2'
-    );
-
+    result.error = MissingTitleError;
     return result;
   }
 
   // handle title length constraint
   if (taskTitle.length < 3 || taskTitle.length > 100) {
-    result.error = new CustomError(
-      `The title must be between 3 - 100 characters.`,
-      'Validation',
-      '-3'
-    );
-
+    result.error = TitleLengthError;
     return result;
   }
 
   // handle descriptions that are too long
   if (taskDescription && taskDescription.length > 500) {
-    result.error = new CustomError(
-      `The description exceeds 500 characters.`,
-      'Validation',
-      '-4'
-    );
-
+    result.error = DescriptionLengthError;
     return result;
   }
 
