@@ -38,6 +38,7 @@
     "@types/pg": "^8.11.11",
     "concurrently": "^9.1.2",
     "typescript": "^5.8.2",
+    "vitest": "^3.0.9",
     "wait-on": "^8.0.3"
   }
 }
