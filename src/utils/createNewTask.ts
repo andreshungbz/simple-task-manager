@@ -6,38 +6,27 @@ import { Request } from 'express';
 import { NewTask } from '../lib/TaskTypes.js';
 
 import {
-  CustomError,
   DescriptionLengthError,
   MissingTitleError,
   TitleLengthError,
 } from '../lib/CustomErrors.js';
 
-interface Result {
-  newTask?: NewTask;
-  ok: boolean;
-  error?: CustomError;
-}
-
-const createNewTask = (req: Request): Result => {
-  const result: Result = { ok: false };
+const createNewTask = (req: Request): NewTask => {
   let { taskTitle, taskDescription, taskPriority } = req.body;
 
   // handle missing title
   if (!taskTitle) {
-    result.error = MissingTitleError;
-    return result;
+    throw MissingTitleError;
   }
 
   // handle title length constraint
   if (taskTitle.length < 3 || taskTitle.length > 100) {
-    result.error = TitleLengthError;
-    return result;
+    throw TitleLengthError;
   }
 
   // handle descriptions that are too long
   if (taskDescription && taskDescription.length > 500) {
-    result.error = DescriptionLengthError;
-    return result;
+    throw DescriptionLengthError;
   }
 
   // null adjust in case of undefined or empty string so that null is entered to database
@@ -46,14 +35,11 @@ const createNewTask = (req: Request): Result => {
   }
 
   // no errors at this point, so change ok to true and assign new task
-  result.ok = true;
-  result.newTask = {
+  return {
     title: taskTitle,
     description: taskDescription,
     priority: taskPriority,
   };
-
-  return result;
 };
 
 export default createNewTask;

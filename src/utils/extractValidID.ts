@@ -3,12 +3,17 @@
 // valid IDs are numbers that are positive and not 0
 
 import { Request } from 'express';
+import { NonNumberIDParamError } from '../lib/CustomErrors.js';
 
-const extractValidID = (req: Request): number | null => {
+const extractValidID = (req: Request): number => {
   const taskID = Number(req.params.id);
 
   // handle non-numerical ID and 0/negative values
-  return isNaN(taskID) || taskID < 1 ? null : taskID;
+  if (isNaN(taskID) || taskID < 1) {
+    throw NonNumberIDParamError;
+  }
+
+  return taskID;
 };
 
 export default extractValidID;

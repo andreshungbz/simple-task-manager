@@ -3,7 +3,7 @@
 
 import { Request, Response } from 'express';
 import { Task, FilterOptions } from '../lib/TaskTypes.js';
-import { CustomError, NonNumberIDParamError } from '../lib/CustomErrors.js';
+import { CustomError } from '../lib/CustomErrors.js';
 
 import taskSorter from '../utils/taskSorter.js';
 import createFilterOptions from '../utils/createFilterOptions.js';
@@ -22,12 +22,10 @@ import {
 
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
-  // parse request to get filter options
-  const options: FilterOptions = createFilterOptions(req);
-
+  const options: FilterOptions = createFilterOptions(req); // create filter options
   try {
-    const tasks: Task[] = await readTasks(options);
-    tasks.sort(taskSorter); // always sort rendered tasks
+    const tasks: Task[] = await readTasks(options); // get array of Tasks
+    tasks.sort(taskSorter); // sort the result
 
     res.render('index', {
       tasks,
@@ -44,15 +42,9 @@ export const getTasks = async (req: Request, res: Response) => {
 
 // POST new task
 export const addTask = async (req: Request, res: Response) => {
-  // extract task fields from request and validate
-  const result = createNewTask(req);
-  if (!result.ok) {
-    renderErrorPage(res, result.error!);
-    return;
-  }
-
   try {
-    await createTask(result.newTask!);
+    const newTask = createNewTask(req); // validate form fields and create new task; throws error on fail
+    await createTask(newTask); // write task to database
     res.redirect('/');
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);
@@ -61,15 +53,9 @@ export const addTask = async (req: Request, res: Response) => {
 
 // PATCH task's completed status
 export const toggleTask = async (req: Request, res: Response) => {
-  // extract and validate id from request
-  const id = extractValidID(req);
-  if (!id) {
-    renderErrorPage(res, NonNumberIDParamError);
-    return;
-  }
-
   try {
-    await toggleCompleted(id);
+    const id = extractValidID(req); // validate and extract id from request; throws error on fail
+    await toggleCompleted(id); // toggle task's completed status
     const referer = req.get('Referer'); // redirect to previous URL
     res.redirect(referer || '/');
   } catch (error) {
@@ -79,15 +65,9 @@ export const toggleTask = async (req: Request, res: Response) => {
 
 // DELETE task
 export const removeTask = async (req: Request, res: Response) => {
-  // extract and validate id from request
-  const id = extractValidID(req);
-  if (!id) {
-    renderErrorPage(res, NonNumberIDParamError);
-    return;
-  }
-
   try {
-    await deleteTask(id);
+    const id = extractValidID(req); // validate and extract id from request; throws error on fail
+    await deleteTask(id); // delete task from database
     const referer = req.get('Referer'); // redirect to previous URL
     res.redirect(referer || '/');
   } catch (error) {
@@ -97,15 +77,9 @@ export const removeTask = async (req: Request, res: Response) => {
 
 // GET page for updating a task's fields (except completed)
 export const updateTaskPage = async (req: Request, res: Response) => {
-  // extract and validate id from request
-  const id = extractValidID(req);
-  if (!id) {
-    renderErrorPage(res, NonNumberIDParamError);
-    return;
-  }
-
   try {
-    const task = await readTask(id);
+    const id = extractValidID(req); // validate and extract id from request; throws error on fail
+    const task = await readTask(id); // get single task's details to render its fields
     res.render('update-task-form', { task });
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);
@@ -114,22 +88,11 @@ export const updateTaskPage = async (req: Request, res: Response) => {
 
 // PUT new task fields
 export const changeTask = async (req: Request, res: Response) => {
-  // extract and validate id from request
-  const id = extractValidID(req);
-  if (!id) {
-    renderErrorPage(res, NonNumberIDParamError);
-    return;
-  }
-
-  // extract task fields from request and validate
-  const result = createNewTask(req);
-  if (!result.ok) {
-    return res.render('error', result.error);
-  }
-
-  result.newTask!.id = id;
   try {
-    await updateTask(result.newTask!);
+    const id = extractValidID(req); // validate and extract id from request; throws error on fail
+    const newTask = createNewTask(req); // validate form fields and create new task; throws error on fail
+    newTask.id = id; // pass id to newTask since it's needed to update
+    await updateTask(newTask);
     res.redirect('/');
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);
