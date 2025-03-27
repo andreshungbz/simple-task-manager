@@ -1,0 +1,12 @@
+<!-- Filename: pagination.ejs
+task pagination -->
+
+<div class="pagination">
+  <% if (pagination.hasPreviousPage) { %>
+    <a href="<%= pagination.previousPageLink %>">Previous</a>
+  <% } %>
+  <span>Page <%= pagination.currentPage %> of <%= pagination.totalPages %></span>
+  <% if (pagination.hasNextPage) { %>
+    <a href="<%= pagination.nextPageLink %>">Next</a>
+  <% } %>
+</div>

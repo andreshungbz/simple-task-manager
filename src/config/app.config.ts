@@ -10,4 +10,5 @@ export const config = {
   abbreviation: 'STM',
   port: PORT,
   baseUrl: `http://${getLocalIPAddress()}:${PORT}`,
+  tasksPerPage: 5,
 };

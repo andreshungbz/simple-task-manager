@@ -7,10 +7,15 @@ import { CustomError } from '../lib/CustomErrors.js';
 
 import taskSorter from '../utils/taskSorter.js';
 import renderErrorPage from '../utils/renderErrorPage.js';
+import constructPagination from '../utils/constructPagination.js';
+
+import { config } from '../config/app.config.js';
 
 import {
   createFilterOptions,
   createNewTask,
+  extractQueryString,
+  extractPageNumber,
   extractValidID,
 } from '../utils/reqUtils.js';
 
@@ -26,17 +31,29 @@ import {
 // GET list of tasks which may have filters applied
 export const getTasks = async (req: Request, res: Response) => {
   const options: FilterOptions = createFilterOptions(req); // create filter options
+  const page = extractPageNumber(req); // get page number
+  const query = extractQueryString(req); // get filter query string if it currently exists
   try {
     const tasks: Task[] = await readTasks(options); // get array of Tasks
     tasks.sort(taskSorter); // sort the result
 
-    res.render('index', {
+    // calculate pagination details
+    const pagination = constructPagination(
       tasks,
+      page,
+      config.tasksPerPage,
+      query
+    );
+
+    // redner tasks list
+    res.render('index', {
+      tasks: pagination.tasks,
       filter: {
         search: options.search,
         category: options.category,
         priorityOrder: options.priorityOrder,
       },
+      pagination: pagination,
     });
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);

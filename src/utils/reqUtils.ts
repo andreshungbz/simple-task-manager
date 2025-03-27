@@ -68,8 +68,19 @@ export const extractValidID = (req: Request): number => {
   return taskID;
 };
 
-export const extractPageNUmber = (req: Request): number => {
+// function that gets page number from Express request query
+export const extractPageNumber = (req: Request): number => {
   const page = req.query.page ? Number(req.query.page) : 1;
   if (isNaN(page) || page < 1) return 1;
   return page;
+};
+
+// function that reads Express request query and returns the URL string
+export const extractQueryString = (req: Request): string => {
+  const queryString = Object.entries(req.query)
+    .filter(([key]) => key !== 'page') // Exclude the "page" parameter
+    .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
+    .join('&');
+
+  return queryString ? `${queryString}&` : '';
 };
