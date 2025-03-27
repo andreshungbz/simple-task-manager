@@ -12,7 +12,6 @@ import taskRoutes from './routes/taskRoutes.js';
 import infoRoutes from './routes/infoRoutes.js';
 
 import { config } from './config/app.config.js';
-import getLocalIPAddress from './utils/getLocalIPAddress.js';
 
 const app = express();
 
@@ -40,5 +39,9 @@ app.use('/', infoRoutes);
 // handle non-existent routes
 app.use(missingRoute);
 
-export const baseUrl = `http://${getLocalIPAddress()}:${config.port}`;
-export default app;
+// start server
+app.listen(config.port, () => {
+  console.log(
+    `[${config.abbreviation}] ${config.name} running at ${config.baseUrl}`
+  );
+});
