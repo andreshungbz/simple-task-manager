@@ -67,3 +67,9 @@ export const extractValidID = (req: Request): number => {
 
   return taskID;
 };
+
+export const extractPageNUmber = (req: Request): number => {
+  const page = req.query.page ? Number(req.query.page) : 1;
+  if (isNaN(page) || page < 1) return 1;
+  return page;
+};
