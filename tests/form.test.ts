@@ -11,7 +11,7 @@ import {
 } from '../src/lib/CustomErrors.js';
 
 describe('New Task', () => {
-  test('Missing Task Title', async () => {
+  test('Title Missing', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', '');
     data.set('taskDescription', '');
@@ -28,7 +28,7 @@ describe('New Task', () => {
     );
   });
 
-  test('Too Short Task Title', async () => {
+  test('Title Too Short', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 't');
     data.set('taskDescription', 'where');
@@ -45,7 +45,7 @@ describe('New Task', () => {
     );
   });
 
-  test('Too Long Task Title', async () => {
+  test('Title Too Long', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 't'.repeat(101));
     data.set('taskDescription', 'where');
@@ -62,7 +62,7 @@ describe('New Task', () => {
     );
   });
 
-  test('Too Long Task Description', async () => {
+  test('Description Too Long', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 'Test');
     data.set('taskDescription', 'd'.repeat(501));
@@ -81,7 +81,7 @@ describe('New Task', () => {
 });
 
 describe('Update Task', () => {
-  test('Missing Task Title', async () => {
+  test('Title Missing', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', '');
     data.set('taskDescription', '');
@@ -98,7 +98,7 @@ describe('Update Task', () => {
     );
   });
 
-  test('Too Short Task Title', async () => {
+  test('Title Too Short', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 't');
     data.set('taskDescription', 'where');
@@ -115,7 +115,7 @@ describe('Update Task', () => {
     );
   });
 
-  test('Too Long Task Title', async () => {
+  test('Title Too Long', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 't'.repeat(101));
     data.set('taskDescription', 'where');
@@ -132,7 +132,7 @@ describe('Update Task', () => {
     );
   });
 
-  test('Too Long Task Description', async () => {
+  test('Description Too Long', async () => {
     const data: URLSearchParams = new URLSearchParams();
     data.set('taskTitle', 'Test');
     data.set('taskDescription', 'd'.repeat(501));

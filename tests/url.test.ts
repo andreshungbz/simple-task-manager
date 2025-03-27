@@ -10,7 +10,7 @@ import {
 } from '../src/lib/CustomErrors.js';
 
 describe('Non-numerical ID', () => {
-  test('Update', async () => {
+  test('Complete', async () => {
     const response = await fetch(`${config.baseUrl}/tasks/test`, {
       method: 'PATCH',
     });
