@@ -26,7 +26,6 @@ export const createTask = async (newTask: NewTask) => {
       )
     ).rows[0];
   } catch (error) {
-    console.error('[taskModel/createTask]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
@@ -41,7 +40,6 @@ export const readTasks = async (options: FilterOptions): Promise<Task[]> => {
   try {
     return (await query(queryObject.query, queryObject.values)).rows;
   } catch (error) {
-    console.error('[taskModel/readTasks]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
@@ -57,7 +55,6 @@ export const readTask = async (id: number): Promise<Task> => {
     if (!Boolean(result.rowCount)) throw NonexistentTaskError; // query doesn't error when id is non-existent, so check count
     return result.rows[0];
   } catch (error) {
-    console.error('[taskModel/readTask]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
@@ -75,7 +72,6 @@ export const toggleCompleted = async (id: number) => {
     );
     if (!Boolean(result.rowCount)) throw NonexistentTaskError; // query doesn't error when id is non-existent, so check count
   } catch (error) {
-    console.error('[taskModel/toggleCompleted]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
@@ -93,7 +89,6 @@ export const updateTask = async (newTask: NewTask) => {
     );
     if (!Boolean(result.rowCount)) throw NonexistentTaskError; // query doesn't error when id is non-existent, so check count
   } catch (error) {
-    console.error('[taskModel/updateTask]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
@@ -108,7 +103,6 @@ export const deleteTask = async (id: number) => {
     const result = await query('DELETE FROM tasks WHERE id = $1', [id]);
     if (!Boolean(result.rowCount)) throw NonexistentTaskError; // query doesn't error when id is non-existent, so check count
   } catch (error) {
-    console.error('[taskModel/deleteTask]', error);
     if (error instanceof DatabaseError) {
       throw new CustomError(error.message, 500, String(error.code), 'Database');
     } else {
