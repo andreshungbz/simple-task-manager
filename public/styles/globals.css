@@ -101,6 +101,11 @@ main {
   text-align: center;
 }
 
+.error {
+  font-weight: bold;
+  color: darkred;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 600px) {

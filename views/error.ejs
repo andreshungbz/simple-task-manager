@@ -13,8 +13,8 @@ customizable error page -->
       <main>
         <div class="message">
           <h2><%= category %> Error</h2>
-          <p>Error Code: <%= code %></p>
-          <p>Message: <%= message %></p>
+          <p><span class="error">Error Code</span>: <%= code %></p>
+          <p><span class="error">Message</span>: <%= message %></p>
         </div>
       </main>
       <%- include('partials/footer') %>
