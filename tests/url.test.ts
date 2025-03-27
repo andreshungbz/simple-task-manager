@@ -1,5 +1,6 @@
 // Filename: url.test.ts
 // vitest tests for non-valid task ID URL parameters
+// assumes task with ID 9999 does not exist
 
 import { describe, test, expect } from 'vitest';
 import { config } from '../src/config/app.config.js';

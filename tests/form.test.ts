@@ -1,5 +1,6 @@
 // Filename: form.test.ts
 // vitest tests for validating task fields when creating and updating tasks
+// for update task tests, assume there exists a task with ID 1
 
 import { describe, test, expect } from 'vitest';
 import { config } from '../src/config/app.config.js';
