@@ -57,13 +57,13 @@ git clone https://github.com/andreshungbz/simple-task-manager.git
 cd simple-task-manager
 ```
 
-3. Rename the `.env.example` file to `.env` to use the default credentials.
+3. Copy the `.env.example` file to a new `.env` file to use the default credentials.
 
 > [!WARNING]
 > The provided `.env` file is for development purposes only. In a production environmet, please set different credentials.
 
 ```
-mv .env.example .env
+cp .env.example .env
 ```
 
 4. Install the Node.js project dependencies.
@@ -116,7 +116,7 @@ This will start the development server, which keeps track of changes (in prodcti
 
 There are some `vitest` tests in the `tests` folder that can be run to conduct certain input validation when operating on a task. It uses a number a `fetch` requests and examines the reponse headers to enure they are what expected. There are some assumptions to note in the comments.
 
-To run the tests, **ensure** the server is running, open a new terminal, and run the following command:
+To run the tests, **ENSURE** the server is running, open a new terminal, and run the following command:
 
 > [!NOTE]
 > The tests **WILL** fail if the server is not running.
