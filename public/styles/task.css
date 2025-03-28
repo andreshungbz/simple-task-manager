@@ -57,3 +57,8 @@ styling for rendered tasks
 .low-priority {
   background-color: rgb(65, 111, 203);
 }
+
+.date {
+  font-size: small;
+  color: gray;
+}

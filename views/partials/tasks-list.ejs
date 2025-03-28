@@ -16,6 +16,11 @@ partial that renders the list of tasks -->
         >
       </p>
       <p><%= task.description %></p>
+      <span class="date">
+        Created <%= task.created_at.toLocaleString('en-US', { day: '2-digit',
+        month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit',
+        second: '2-digit' }) %>
+      </span>
       <div class="taskOperations">
         <form method="POST" action="/tasks/<%= task.id %>?_method=PATCH">
           <button type="submit">
