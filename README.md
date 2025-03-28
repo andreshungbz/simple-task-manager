@@ -83,7 +83,7 @@ npm install
 npm run initiatedb
 ```
 
-This will essentially run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder. The three `psql` commands run sequentially are:
+This will essentially run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder. The three `psql` commands run sequentially are:
 
 ```
 psql --username=postgres --file=scripts/setup.sql
