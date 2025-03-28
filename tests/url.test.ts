@@ -16,7 +16,7 @@ describe('Non-numerical ID', () => {
       method: 'PATCH',
     });
     expect(response.status).toBe(NonNumberIDParamError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonNumberIDParamError.appErrorCode
     );
   });
@@ -24,7 +24,7 @@ describe('Non-numerical ID', () => {
   test('Update Page', async () => {
     const response = await fetch(`${config.baseUrl}/update/tasks/test`);
     expect(response.status).toBe(NonNumberIDParamError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonNumberIDParamError.appErrorCode
     );
   });
@@ -34,7 +34,7 @@ describe('Non-numerical ID', () => {
       method: 'DELETE',
     });
     expect(response.status).toBe(NonNumberIDParamError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonNumberIDParamError.appErrorCode
     );
   });
@@ -46,7 +46,7 @@ describe('Non-existent ID', () => {
       method: 'PATCH',
     });
     expect(response.status).toBe(NonexistentTaskError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonexistentTaskError.appErrorCode
     );
   });
@@ -54,7 +54,7 @@ describe('Non-existent ID', () => {
   test('Update Page', async () => {
     const response = await fetch(`${config.baseUrl}/update/tasks/9999`);
     expect(response.status).toBe(NonexistentTaskError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonexistentTaskError.appErrorCode
     );
   });
@@ -64,7 +64,7 @@ describe('Non-existent ID', () => {
       method: 'DELETE',
     });
     expect(response.status).toBe(NonexistentTaskError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       NonexistentTaskError.appErrorCode
     );
   });

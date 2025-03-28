@@ -24,7 +24,7 @@ describe('New Task', () => {
     });
 
     expect(response.status).toBe(MissingTitleError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       MissingTitleError.appErrorCode
     );
   });
@@ -41,7 +41,7 @@ describe('New Task', () => {
     });
 
     expect(response.status).toBe(TitleLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       TitleLengthError.appErrorCode
     );
   });
@@ -58,7 +58,7 @@ describe('New Task', () => {
     });
 
     expect(response.status).toBe(TitleLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       TitleLengthError.appErrorCode
     );
   });
@@ -75,7 +75,7 @@ describe('New Task', () => {
     });
 
     expect(response.status).toBe(DescriptionLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       DescriptionLengthError.appErrorCode
     );
   });
@@ -94,7 +94,7 @@ describe('Update Task', () => {
     });
 
     expect(response.status).toBe(MissingTitleError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       MissingTitleError.appErrorCode
     );
   });
@@ -111,7 +111,7 @@ describe('Update Task', () => {
     });
 
     expect(response.status).toBe(TitleLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       TitleLengthError.appErrorCode
     );
   });
@@ -128,7 +128,7 @@ describe('Update Task', () => {
     });
 
     expect(response.status).toBe(TitleLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       TitleLengthError.appErrorCode
     );
   });
@@ -145,7 +145,7 @@ describe('Update Task', () => {
     });
 
     expect(response.status).toBe(DescriptionLengthError.httpErrorCode);
-    expect(response.headers.get('X-STM-Error')).toBe(
+    expect(response.headers.get(`X-${config.abbreviation}-Error`)).toBe(
       DescriptionLengthError.appErrorCode
     );
   });
