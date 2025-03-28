@@ -5,9 +5,12 @@ import { Request, Response } from 'express';
 import { Task, FilterOptions } from '../lib/TaskTypes.js';
 import { CustomError } from '../lib/CustomErrors.js';
 
-import taskSorter from '../utils/taskSorter.js';
 import renderErrorPage from '../utils/renderErrorPage.js';
 import constructPagination from '../utils/constructPagination.js';
+import {
+  incompleteFirstSorter,
+  earliestFirstSorter,
+} from '../utils/taskSorters.js';
 
 import { config } from '../config/app.config.js';
 
@@ -35,8 +38,8 @@ export const getTasks = async (req: Request, res: Response) => {
   const query = extractQueryString(req); // get filter query string if it currently exists
   try {
     const tasks: Task[] = await readTasks(options); // get array of Tasks
-    tasks.sort(taskSorter); // sort the result
-
+    earliestFirstSorter(tasks, options.priorityOrder); // newest tasks go first
+    tasks.sort(incompleteFirstSorter); // incomplete tasks go first
     // calculate pagination details
     const pagination = constructPagination(
       tasks,
