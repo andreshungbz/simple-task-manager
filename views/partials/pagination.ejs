@@ -3,10 +3,16 @@ task pagination -->
 
 <div class="pagination">
   <% if (pagination.hasPreviousPage) { %>
-    <a href="<%= pagination.previousPageLink %>">Previous</a>
+  <a href="<%= pagination.previousPageLink %>">Previous</a>
+  <% } else { %>
+  <span class="disabled">Prev</span>
   <% } %>
-  <span>Page <%= pagination.currentPage %> of <%= pagination.totalPages %></span>
+  <span
+    >Page <%= pagination.currentPage %> of <%= pagination.totalPages %></span
+  >
   <% if (pagination.hasNextPage) { %>
-    <a href="<%= pagination.nextPageLink %>">Next</a>
+  <a href="<%= pagination.nextPageLink %>">Next</a>
+  <% } else { %>
+  <span class="disabled">Next</span>
   <% } %>
 </div>

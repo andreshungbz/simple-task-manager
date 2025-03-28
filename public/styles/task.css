@@ -14,6 +14,7 @@ styling for rendered tasks
   background-color: white;
   border: 2px solid var(--blue-2);
   border-radius: 5px;
+  box-shadow: -1px 1px 3px var(--blue-2);
   transition: transform 0.2s ease;
 }
 

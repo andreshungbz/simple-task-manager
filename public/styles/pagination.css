@@ -6,25 +6,32 @@ styling for pagination
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 5px;
+  margin-top: 15px;
 }
 
 .pagination a {
   padding: 5px 10px;
-  border: 1px solid var(--blue-2);
   border-radius: 5px;
   text-decoration: none;
-  color: var(--blue-2);
+  background-color: var(--blue-1);
+  color: white;
   transition: background-color 0.2s ease;
 }
 
 .pagination a:hover {
   background-color: var(--blue-2);
-  color: white;
 }
 
 .pagination span {
   padding: 5px 10px;
   font-weight: bold;
+}
+
+.pagination .disabled {
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  background-color: rgb(198, 198, 198);
+  color: white;
 }
