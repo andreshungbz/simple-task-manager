@@ -48,7 +48,7 @@ export const getTasks = async (req: Request, res: Response) => {
       query
     );
 
-    // redner tasks list
+    // render tasks list
     res.render('index', {
       tasks: pagination.tasks,
       filter: {

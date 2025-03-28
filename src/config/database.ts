@@ -1,3 +1,6 @@
+// Filename: database.ts
+// configuration of the PostgreSQL client and connection pool
+
 import pg from 'pg';
 import dotenv from 'dotenv';
 
@@ -14,7 +17,7 @@ const pool = new pg.Pool({
   port: Number(process.env.DB_PORT),
 });
 
-// test connection
+// test the connection
 pool.connect((err, _client, release) => {
   if (err) {
     return console.error(
@@ -36,6 +39,7 @@ pool.on('error', (err) => {
   process.exit(-1);
 });
 
+// use a function wrapper to make queries
 export const query = async (
   text: string,
   params?: Array<string | number | null>

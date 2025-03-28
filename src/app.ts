@@ -1,4 +1,4 @@
-// Filename: app.js
+// Filename: app.ts
 // the Express.js server instance
 
 import express from 'express';
