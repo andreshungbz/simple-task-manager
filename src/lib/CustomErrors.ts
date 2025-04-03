@@ -10,17 +10,26 @@ export class CustomError extends Error {
   httpErrorCode: number;
   appErrorCode: string;
   category: string;
+  title?: string;
+  description?: string;
+  priority?: string;
 
   constructor(
     message: string,
     httpCode: number,
     appCode: string,
-    category: string
+    category: string,
+    title: string = '',
+    description: string = '',
+    priority: string = 'low'
   ) {
     super(message);
     this.httpErrorCode = httpCode;
     this.appErrorCode = appCode;
     this.category = category;
+    this.title = title;
+    this.description = description;
+    this.priority = priority;
     this.name = 'CustomError';
   }
 }

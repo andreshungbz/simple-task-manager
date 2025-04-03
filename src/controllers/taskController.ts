@@ -57,6 +57,7 @@ export const getTasks = async (req: Request, res: Response) => {
         priorityOrder: options.priorityOrder,
       },
       pagination: pagination,
+      error: null,
     });
   } catch (error) {
     if (error instanceof CustomError) renderErrorPage(res, error);

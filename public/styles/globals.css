@@ -106,6 +106,14 @@ main {
   color: darkred;
 }
 
+.error-alert {
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(255, 225, 225);
+  margin-bottom: 10px;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 600px) {

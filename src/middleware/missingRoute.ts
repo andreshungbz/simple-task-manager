@@ -4,10 +4,19 @@
 import { Request, Response } from 'express';
 import { NonexistentPage404Error } from '../lib/CustomErrors.js';
 
-import renderErrorPage from '../utils/renderErrorPage.js';
+import { config } from '../config/app.config.js';
 
 const missingRoute = (_req: Request, res: Response) => {
-  renderErrorPage(res, NonexistentPage404Error);
+  res.setHeader(
+    `X-${config.abbreviation}-Error`,
+    NonexistentPage404Error.appErrorCode
+  );
+  res.status(NonexistentPage404Error.httpErrorCode);
+  res.render('error', {
+    code: NonexistentPage404Error.appErrorCode,
+    category: NonexistentPage404Error.category,
+    message: NonexistentPage404Error.message,
+  });
 };
 
 export default missingRoute;

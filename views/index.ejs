@@ -18,7 +18,12 @@ main page for web application -->
         <h2>Filters</h2>
         <%- include ('partials/filter-form') %>
         <h2>Add Task</h2>
-        <%- include('partials/add-task-form') %>
+        <%- include('partials/add-task-form') %> <% if (error) { %>
+        <div class="error-alert">
+          <p><strong>Message</strong>: <%= error.message %></p>
+          <p><strong>Error Code</strong>: <%= error.appErrorCode %></p>
+        </div>
+        <% } %>
         <h2>Tasks List</h2>
         <%- include('partials/tasks-list') %>
       </main>

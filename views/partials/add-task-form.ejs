@@ -13,6 +13,8 @@ partial for form that adds a task -->
           minlength="3"
           maxlength="100"
           placeholder="What to do..."
+          value="<%= error?.title %>"
+          class="<%= error?.appErrorCode.includes('TITLE') ? 'invalid' : '' %>"
           required
         />
       </div>
@@ -22,19 +24,25 @@ partial for form that adds a task -->
           id="task-description"
           name="taskDescription"
           maxlength="500"
-        ></textarea>
+          class="<%= error?.appErrorCode.includes('DESC') ? 'invalid' : '' %>"
+        >
+<%= error?.description %></textarea
+        >
       </div>
       <div class="prio-input">
         <label>Priority:</label>
         <div>
           <label>
-            <input type="radio" name="taskPriority" value="low" checked /> Low
+            <input type="radio" name="taskPriority" value="low" <%=
+            error?.priority === 'low' || !error ? 'checked' : '' %> /> Low
           </label>
           <label>
-            <input type="radio" name="taskPriority" value="medium" /> Medium
+            <input type="radio" name="taskPriority" value="medium" <%=
+            error?.priority === 'medium' ? 'checked' : '' %> /> Medium
           </label>
           <label>
-            <input type="radio" name="taskPriority" value="high" /> High
+            <input type="radio" name="taskPriority" value="high" <%=
+            error?.priority === 'high' ? 'checked' : '' %> /> High
           </label>
         </div>
       </div>

@@ -62,3 +62,8 @@ styling for rendered tasks
   font-size: small;
   color: gray;
 }
+
+.invalid {
+  border-color: red;
+  background-color: rgb(255, 225, 225);
+}

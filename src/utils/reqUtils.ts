@@ -10,6 +10,7 @@ import {
   MissingTitleError,
   TitleLengthError,
   NonNumberIDParamError,
+  CustomError,
 } from '../lib/CustomErrors.js';
 
 // function that takes an Express request and parses the format options
@@ -29,17 +30,41 @@ export const createNewTask = (req: Request): NewTask => {
 
   // handle missing title
   if (!taskTitle) {
-    throw MissingTitleError;
+    throw new CustomError(
+      MissingTitleError.message,
+      MissingTitleError.httpErrorCode,
+      MissingTitleError.appErrorCode,
+      MissingTitleError.category,
+      taskTitle,
+      taskDescription,
+      taskPriority
+    );
   }
 
   // handle title length constraint
   if (taskTitle.length < 3 || taskTitle.length > 100) {
-    throw TitleLengthError;
+    throw new CustomError(
+      TitleLengthError.message,
+      TitleLengthError.httpErrorCode,
+      TitleLengthError.appErrorCode,
+      TitleLengthError.category,
+      taskTitle,
+      taskDescription,
+      taskPriority
+    );
   }
 
   // handle descriptions that are too long
   if (taskDescription && taskDescription.length > 500) {
-    throw DescriptionLengthError;
+    throw new CustomError(
+      DescriptionLengthError.message,
+      DescriptionLengthError.httpErrorCode,
+      DescriptionLengthError.appErrorCode,
+      DescriptionLengthError.category,
+      taskTitle,
+      taskDescription,
+      taskPriority
+    );
   }
 
   // null adjust in case of undefined or empty string so that null is entered to database
