@@ -29,7 +29,7 @@ The application is built using the following technologies:
 
 ## Video Demonstration
 
-A video demonstration of the application can be found on following [YouTube video link]().
+A video demonstration of the application can be found on following [YouTube video link](https://youtu.be/gLKjjvNg1x8?si=yx7Aebu2EUfmEgiz).
 
 ## Running The Application
 
