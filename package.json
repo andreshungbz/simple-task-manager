@@ -13,7 +13,7 @@
   "license": "ISC",
   "author": "Andres Hung",
   "type": "module",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "clean": "rm -rf build",
     "build": "npm run clean && tsc",
