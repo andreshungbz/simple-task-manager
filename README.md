@@ -3,7 +3,7 @@
 > [!NOTE]
 > Previous versions of the application can be found in their respective branches and tags.
 
-A basic todo list web application that is part of the CMPS2212 GUI Programming course at the University of Belize and was completed in the 2024-2 semester.
+Simple Task Manager is a basic to-do list web application part of the CMPS2212 GUI Programming course at the University of Belize. It was completed in the 2024-2 semester.
 
 ## Application Features
 
@@ -29,11 +29,11 @@ The application is built using the following technologies:
 
 ## Video Demonstration
 
-A video demonstration of the application can be found on following [YouTube video link](https://youtu.be/gLKjjvNg1x8?si=yx7Aebu2EUfmEgiz).
+A video demonstration of the application can be found on the following [YouTube video link](https://youtu.be/gLKjjvNg1x8?si=yx7Aebu2EUfmEgiz).
 
 ## Running The Application
 
-These instruction assume you are using a UNIX-like operating system (Linux, macOS, etc.). If you are using Windows, you may need to adjust the commands accordingly.
+These instructions assume you are using a UNIX-like operating system (Linux, macOS, etc.). If you are using Windows, you may need to adjust the commands accordingly.
 
 ### Prerequisites
 
@@ -45,7 +45,7 @@ These instruction assume you are using a UNIX-like operating system (Linux, macO
 
 ### Initial Setup
 
-1. Clone the repository in the whichever directory you prefer on your system.
+1. Clone the repository in whichever directory you prefer on your system.
 
 ```
 git clone https://github.com/andreshungbz/simple-task-manager.git
@@ -60,7 +60,7 @@ cd simple-task-manager
 3. Copy the `.env.example` file to a new `.env` file to use the default credentials.
 
 > [!WARNING]
-> The provided `.env` file is for development purposes only. In a production environmet, please set different credentials.
+> The provided `.env` file is for development purposes only. In a production environment, please set different credentials.
 
 ```
 cp .env.example .env
@@ -83,7 +83,7 @@ npm install
 npm run initiatedb
 ```
 
-This will essentially run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder. The three `psql` commands run sequentially are:
+This will run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host-based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts more thoroughly, refer to the `package.json` file and the `scripts` folder. The three `psql` commands run sequentially are:
 
 ```
 psql --username=postgres --file=scripts/setup.sql
@@ -97,10 +97,10 @@ psql --username=stm_user --dbname=cmps2212_stm --file=scripts/tables.sql
 psql --username=stm_user --dbname=cmps2212_stm --file=scripts/data.sql
 ```
 
-At the end of the script, you will have a `cmps2212_stm` database and a `stm_user` user who is the owner of the database and its tables.
+At the end of the script, you will have a `cmps2212_stm` database and a `stm_user` user who owns the database and its tables.
 
 > [!NOTE]
-> While using the default `postgres` superuser is generally not recommended for use, it is the easiest way to get the application started. Any PostgreSQL role with the CREATEROLE and CREATEDB attributes will work with the scripts, but you will need to manually adjust the scripts in the `package.json` file yourself.
+> While using the default `postgres` superuser is generally not recommended, it is the easiest way to start the application. Any PostgreSQL role with the CREATEROLE and CREATEDB attributes will work with the scripts, but you will need to manually adjust the scripts in the `package.json` file yourself.
 
 ### Start the Application
 
@@ -110,11 +110,11 @@ At the end of the script, you will have a `cmps2212_stm` database and a `stm_use
 npm run dev
 ```
 
-This will start the development server, which keeps track of changes (in prodction you would run `npm start`). Take note of the address logged in the console and visit the application in the web browser at using that address and port. If you prefer, `http://localhost:3000` also works.
+This will start the development server, which keeps track of changes (in production, you would run `npm start`). Take note of the address logged in the console and visit the application in the web browser using that address and port. If you prefer, `http://localhost:3000` also works.
 
 ## Application Tests
 
-There are some `vitest` tests in the `tests` folder that can be run to conduct certain input validation when operating on a task. It uses a number a `fetch` requests and examines the reponse headers to enure they are what expected. There are some assumptions to note in the comments.
+Some `vitest` tests in the `tests` folder can be run to conduct certain input validation when operating on a task. It uses some `fetch` requests and examines the response headers to ensure they are what is expected. There are some assumptions to note in the comments.
 
 To run the tests, **ENSURE** the server is running, open a new terminal, and run the following command:
 
@@ -127,8 +127,8 @@ npm run test
 
 ## Miscellaneous Configuration
 
-There are some settings such as port and tasks per page that can be configured in the `src/config/app.config.ts` file.
+Some settings, such as port and tasks per page, can be configured in the `src/config/app.config.ts` file.
 
 ## Attributions
 
-Favicon clipboard icon is copyright 2020 Twitter, Inc and other contributors. The graphics are licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). No modifications were made to the original image.
+Favicon clipboard icon is copyright 2020 Twitter, Inc., and other contributors. The graphics are licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). No modifications were made to the original image.
