@@ -80,6 +80,7 @@ npm install
 1. Login to `psql` as the `postgres` superuser and create this user by pasting the following in the `psql` command line:
 
 ```
+DROP DATABASE IF EXISTS cmps2212_stm;
 DROP USER IF EXISTS stm_user;
 CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
 ```
@@ -96,7 +97,7 @@ CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
 npm run initiatedb
 ```
 
-This will essentially run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
+This will essentially run three separate `psql` commands for creating the database, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
 
 At the end of the steps, you will have a `cmps2212_stm` database and a `stm_user` user who is the owner of the database and its tables.
 
