@@ -80,6 +80,7 @@ npm install
 1. Login to `psql` as the `postgres` superuser and create this user by pasting the following in the `psql` command line:
 
 ```
+DROP USER IF EXISTS stm_user;
 CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
 ```
 
