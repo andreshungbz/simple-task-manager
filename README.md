@@ -77,30 +77,30 @@ npm install
 > [!WARNING]
 > These steps set up a database with predetermined names and credentials. In a production environment, please set different names and credentials.
 
-1. Run the following command:
+1. Login to `psql` as the `postgres` superuser and create this user by pasting the following in the `psql` command line:
+
+```
+CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
+```
+
+2. Exit `psql`
+
+```
+\q
+```
+
+3. Run the following command:
 
 ```
 npm run initiatedb
 ```
 
-This will run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host-based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts more thoroughly, refer to the `package.json` file and the `scripts` folder. The three `psql` commands run sequentially are:
+This will essentially run three separate `psql` commands for creating the database and user, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
 
-```
-psql --username=postgres --file=scripts/setup.sql
-```
-
-```
-psql --username=stm_user --dbname=cmps2212_stm --file=scripts/tables.sql
-```
-
-```
-psql --username=stm_user --dbname=cmps2212_stm --file=scripts/data.sql
-```
-
-At the end of the script, you will have a `cmps2212_stm` database and a `stm_user` user who owns the database and its tables.
+At the end of the steps, you will have a `cmps2212_stm` database and a `stm_user` user who is the owner of the database and its tables.
 
 > [!NOTE]
-> While using the default `postgres` superuser is generally not recommended, it is the easiest way to start the application. Any PostgreSQL role with the CREATEROLE and CREATEDB attributes will work with the scripts, but you will need to manually adjust the scripts in the `package.json` file yourself.
+> While using the default `postgres` superuser is generally not recommended for use, it is the easiest way to get the application started. Any PostgreSQL role with the CREATEROLE and CREATEDB attributes will work with the scripts, but you will need to manually adjust the scripts in the `package.json` file yourself.
 
 ### Start the Application
 
