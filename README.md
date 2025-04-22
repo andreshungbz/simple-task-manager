@@ -77,7 +77,10 @@ npm install
 > [!WARNING]
 > These steps set up a database with predetermined names and credentials. In a production environment, please set different names and credentials.
 
-1. Login to `psql` as the `postgres` superuser and create this user by pasting the following in the `psql` command line:
+> [!NOTE]
+> These steps assume you have the default `postgres` superuser as well as the default `postgres` database. If you have a different setup, you may need to adjust the commands accordingly.
+
+1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` command line to clear any existing database/user and create a new user:
 
 ```
 DROP DATABASE IF EXISTS cmps2212_stm;
@@ -100,9 +103,6 @@ npm run initiatedb
 This will essentially run three separate `psql` commands for creating the database, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
 
 At the end of the steps, you will have a `cmps2212_stm` database and a `stm_user` user who is the owner of the database and its tables.
-
-> [!NOTE]
-> While using the default `postgres` superuser is generally not recommended for use, it is the easiest way to get the application started. Any PostgreSQL role with the CREATEROLE and CREATEDB attributes will work with the scripts, but you will need to manually adjust the scripts in the `package.json` file yourself.
 
 ### Start the Application
 
