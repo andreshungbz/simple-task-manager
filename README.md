@@ -134,9 +134,12 @@ Return to your terminal and open the file in the `nano` text editor.
 sudo nano {YOUR_HBA_FILE_LOCATION}
 ```
 
-For the `local` unix socket connections row, change the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
+For the `local` unix socket connections row as well as any rows concerning `postgres`, change the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
 
 ```
+# Database administrative login by Unix domain socket
+local   all             postgres                                scram-sha-256
+
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             all                                     scram-sha-256
 ```
