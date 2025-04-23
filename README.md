@@ -158,10 +158,10 @@ sudo systemctl restart postgresql
 \i ./scripts/setup.sql
 ```
 
-2. Login as `stm_user` in the new database (password: `swordfish`).
+2. Login as `postgres` in the new database.
 
 ```
-\c cmps2212_stm stm_user
+\c cmps2212_stm postgres
 ```
 
 3. Create the tables.
