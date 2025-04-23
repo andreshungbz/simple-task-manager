@@ -72,7 +72,75 @@ cp .env.example .env
 npm install
 ```
 
-### Database Setup
+### Database Setup (THE LAME WAY)
+
+1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` prompt:
+
+```
+DROP DATABASE IF EXISTS cmps2212_stm;
+DROP USER IF EXISTS stm_user;
+CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
+```
+
+2. Login as `stm_user`
+
+```
+\c stm_user
+```
+
+3. Create the database
+
+```
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    completed BOOLEAN DEFAULT false,
+    priority VARCHAR(10) CHECK (priority IN ('low', 'medium', 'high')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+4. Insert some initial data
+
+```
+INSERT INTO tasks (title, description, completed, priority)
+VALUES
+    ('Record Demo Video for Simple Task Manager', 'Record a 10-15 minute video on the GUI project and upload it to YouTube.', false, 'high'),
+    ('Complete OOP Tables', null, false, 'high'),
+    ('Design OOP Screens', null, false, 'medium'),
+    ('Continue C# Learning', 'Read Chapter 4 of the Head First C# textbook.', false, 'low'),
+    ('Write Journal Entry 1', 'Submit journal for the internship days this week.', true, 'high'),
+    ('Code Simple Task Management Web Application', 'Complete for GUI class homework/quiz/test.', true, 'medium'),
+    ('Customize Work Profile', 'Finish setting up work account profile for internship.', true, 'low');
+```
+
+### Database Setup (THE COOL WAY)
+
+After much headache, if you want to use my cool scripts to very quickly setup the database, you must ensure your PostgreSQL instance has properly configured host-based configuration settings. This is found in the `pg_hba.conf` file. You can check the location of the file by running the following command:
+
+```
+SHOW hba_file;
+```
+
+You probably have the `nano` text editor, so open the file to edit it:
+
+```
+sudo nano {YOUR_HBA_FILE_LOCATION}
+```
+
+For the row for `local` unix socket connections, ensure the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
+
+```
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             all                                     scram-sha-256
+```
+
+Save the file then restart the PostgreSQL server daemon:
+
+```
+sudo systemctl restart postgresql
+```
 
 > [!WARNING]
 > These steps set up a database with predetermined names and credentials. In a production environment, please set different names and credentials.
