@@ -83,9 +83,9 @@ npm install
 npm run dbinitiate
 ```
 
-This will essentially run three separate `psql` commands for creating the database, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
+This will run three separate `psql` commands for creating the database, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host-based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts more thoroughly, refer to the `package.json` file and the `scripts` folder.
 
-At the end of the steps, you will have a `cmps2212_stm` database and a `stm_user` user who is the owner of the database and its tables.
+At the end of the steps, you will have a `cmps2212_stm` database and a `stm_user` user who owns the database and its tables.
 
 ### Start the Application
 
@@ -122,19 +122,19 @@ Favicon clipboard icon is copyright 2020 Twitter, Inc., and other contributors. 
 
 ### Update PostgreSQL HBA Configuration
 
-1. Login to `psql` as the `postgres` superuser and run the following command to find the location of your PostgreSQL host-based authentication configuration file.
+1. Log in to `psql` as the `postgres` superuser and run the following command to find the location of your PostgreSQL host-based authentication configuration file.
 
 ```
 SHOW hba_file;
 ```
 
-Return to your terminal and open the file in the `nano` text editor.
+2. Return to your terminal and open the `nano` text editor file.
 
 ```
 sudo nano {YOUR_HBA_FILE_LOCATION}
 ```
 
-For the `local` unix socket connections row as well as any rows concerning `postgres`, change the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
+3. For the `local` unix socket connections row as well as any rows concerning `postgres`, change the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
 
 ```
 # Database administrative login by Unix domain socket
@@ -144,7 +144,7 @@ local   all             postgres                                scram-sha-256
 local   all             all                                     scram-sha-256
 ```
 
-Save the file, then restart the PostgreSQL server daemon:
+4. Save the file, then restart the PostgreSQL server daemon:
 
 ```
 sudo systemctl restart postgresql
@@ -155,13 +155,13 @@ sudo systemctl restart postgresql
 > [!NOTE]
 > Make sure you're in the project root directory.
 
-1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` prompt.
+1. Log in to `psql` as the `postgres` superuser and paste the following in the `psql` prompt.
 
 ```
 \i ./scripts/setup.sql
 ```
 
-2. Login as `postgres` in the new database.
+2. Log in as `postgres` in the new database.
 
 ```
 \c cmps2212_stm postgres
