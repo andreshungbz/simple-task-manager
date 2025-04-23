@@ -155,7 +155,7 @@ sudo systemctl restart postgresql
 1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` prompt.
 
 ```
-\i scripts/setup.sql
+\i ./scripts/setup.sql
 ```
 
 2. Login as `stm_user` in the new database (password: `swordfish`).
@@ -167,11 +167,11 @@ sudo systemctl restart postgresql
 3. Create the tables.
 
 ```
-\i scripts/tables.sql
+\i ./scripts/tables.sql
 ```
 
 4. Insert some initial data.
 
 ```
-\i scripts/data.sql
+\i ./scripts/data.sql
 ```
