@@ -33,7 +33,7 @@ A video demonstration of the application can be found on the following [YouTube 
 
 ## Running The Application
 
-These instructions assume you are using a UNIX-like operating system (Linux, macOS, etc.). If you are using Windows, you may need to adjust the commands accordingly.
+These instructions assume you use a UNIX-like operating system (Linux, macOS, etc.). If you are using Windows, you may need to adjust the commands accordingly.
 
 ### Prerequisites
 
@@ -117,7 +117,7 @@ VALUES
 
 ### Database Setup (THE COOL WAY)
 
-After much headache, if you want to use my cool scripts to very quickly setup the database, you must ensure your PostgreSQL instance has properly configured host-based configuration settings. This is found in the `pg_hba.conf` file. You can check the location of the file by running the following command:
+After much headache, if you want to use my cool scripts to very quickly set up the database, you must ensure your PostgreSQL instance has properly configured host-based configuration settings. This is found in the `pg_hba.conf` file. You can check the location of the file by running the following command:
 
 ```
 SHOW hba_file;
@@ -129,14 +129,14 @@ You probably have the `nano` text editor, so open the file to edit it:
 sudo nano {YOUR_HBA_FILE_LOCATION}
 ```
 
-For the row for `local` unix socket connections, ensure the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
+For the `local` unix socket connections row, ensure the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
 
 ```
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 local   all             all                                     scram-sha-256
 ```
 
-Save the file then restart the PostgreSQL server daemon:
+Save the file, then restart the PostgreSQL server daemon:
 
 ```
 sudo systemctl restart postgresql
@@ -146,7 +146,7 @@ sudo systemctl restart postgresql
 > These steps set up a database with predetermined names and credentials. In a production environment, please set different names and credentials.
 
 > [!NOTE]
-> These steps assume you have the default `postgres` superuser as well as the default `postgres` database. If you have a different setup, you may need to adjust the commands accordingly.
+> These steps assume you have the default `postgres` superuser and the default `postgres` database. You may need to adjust the commands if you have a different setup.
 
 1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` command line to clear any existing database/user and create a new user:
 
