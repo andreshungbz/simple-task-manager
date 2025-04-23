@@ -86,7 +86,7 @@ CREATE DATABASE cmps2212_stm OWNER stm_user;
 2. Login as `stm_user` in the new database
 
 ```
-\c stm_user cmps2212_stm
+\c cmps2212_stm stm_user
 ```
 
 3. Create the tables
