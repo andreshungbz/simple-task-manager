@@ -14,4 +14,6 @@ CREATE TABLE tasks (
     completed BOOLEAN DEFAULT false,
     priority VARCHAR(10) CHECK (priority IN ('low', 'medium', 'high')),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-) OWNER stm_user;
+);
+
+ALTER TABLE tasks OWNER TO stm_user;
