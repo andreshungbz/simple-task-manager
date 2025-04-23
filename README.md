@@ -80,15 +80,16 @@ npm install
 DROP DATABASE IF EXISTS cmps2212_stm;
 DROP USER IF EXISTS stm_user;
 CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
+CREATE DATABASE cmps2212_stm OWNER stm_user;
 ```
 
-2. Login as `stm_user`
+2. Login as `stm_user` in the new database
 
 ```
-\c stm_user
+\c stm_user cmps2212_stm
 ```
 
-3. Create the database
+3. Create the tables
 
 ```
 CREATE TABLE tasks (
