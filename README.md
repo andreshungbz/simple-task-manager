@@ -72,101 +72,15 @@ cp .env.example .env
 npm install
 ```
 
-### Database Setup (THE LAME WAY)
+### Database Setup
 
-1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` prompt:
+> [!IMPORTANT]
+> The scripts will only work if your PostgreSQL host-based authentication configuration setting is set to `md5` or `scram-sha-256`. Instructions to change that are located in the [Update PostgreSQL HBA Configuration](#update-postgresql-hba-configuration) appendix section. Otherwise, use the more manual method in the [Manual Database Setup](#manual-database-setup) section.
 
-```
-DROP DATABASE IF EXISTS cmps2212_stm;
-DROP USER IF EXISTS stm_user;
-CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
-CREATE DATABASE cmps2212_stm OWNER stm_user;
-```
-
-2. Login as `stm_user` in the new database
+1. Run the following script. You may be prompted for the `postgres` user and the `stm_user` password (`swordfish`).
 
 ```
-\c cmps2212_stm stm_user
-```
-
-3. Create the tables
-
-```
-CREATE TABLE tasks (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    description TEXT,
-    completed BOOLEAN DEFAULT false,
-    priority VARCHAR(10) CHECK (priority IN ('low', 'medium', 'high')),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
-
-4. Insert some initial data
-
-```
-INSERT INTO tasks (title, description, completed, priority)
-VALUES
-    ('Record Demo Video for Simple Task Manager', 'Record a 10-15 minute video on the GUI project and upload it to YouTube.', false, 'high'),
-    ('Complete OOP Tables', null, false, 'high'),
-    ('Design OOP Screens', null, false, 'medium'),
-    ('Continue C# Learning', 'Read Chapter 4 of the Head First C# textbook.', false, 'low'),
-    ('Write Journal Entry 1', 'Submit journal for the internship days this week.', true, 'high'),
-    ('Code Simple Task Management Web Application', 'Complete for GUI class homework/quiz/test.', true, 'medium'),
-    ('Customize Work Profile', 'Finish setting up work account profile for internship.', true, 'low');
-```
-
-### Database Setup (THE COOL WAY)
-
-After much headache, if you want to use my cool scripts to very quickly set up the database, you must ensure your PostgreSQL instance has properly configured host-based configuration settings. This is found in the `pg_hba.conf` file. You can check the location of the file by running the following command:
-
-```
-SHOW hba_file;
-```
-
-You probably have the `nano` text editor, so open the file to edit it:
-
-```
-sudo nano {YOUR_HBA_FILE_LOCATION}
-```
-
-For the `local` unix socket connections row, ensure the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
-
-```
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-local   all             all                                     scram-sha-256
-```
-
-Save the file, then restart the PostgreSQL server daemon:
-
-```
-sudo systemctl restart postgresql
-```
-
-> [!WARNING]
-> These steps set up a database with predetermined names and credentials. In a production environment, please set different names and credentials.
-
-> [!NOTE]
-> These steps assume you have the default `postgres` superuser and the default `postgres` database. You may need to adjust the commands if you have a different setup.
-
-1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` command line to clear any existing database/user and create a new user:
-
-```
-DROP DATABASE IF EXISTS cmps2212_stm;
-DROP USER IF EXISTS stm_user;
-CREATE USER stm_user WITH CREATEDB PASSWORD 'swordfish';
-```
-
-2. Exit `psql`
-
-```
-\q
-```
-
-3. Run the following command:
-
-```
-npm run initiatedb
+npm run dbinitiate
 ```
 
 This will essentially run three separate `psql` commands for creating the database, creating the necessary tables, and inserting some initial data. Depending on your PostgreSQL host based configuration settings, you may be prompted for passwords during the command. The default password for `stm_user` is `swordfish`. To examine the scripts in more detail, refer to the `package.json` file and the `scripts` folder.
@@ -203,3 +117,61 @@ Some settings, such as port and tasks per page, can be configured in the `src/co
 ## Attributions
 
 Favicon clipboard icon is copyright 2020 Twitter, Inc., and other contributors. The graphics are licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). No modifications were made to the original image.
+
+## Appendix
+
+### Update PostgreSQL HBA Configuration
+
+1. Login to `psql` as the `postgres` superuser and run the following command to find the location of your PostgreSQL host-based authentication configuration file.
+
+```
+SHOW hba_file;
+```
+
+Return to your terminal and open the file in the `nano` text editor.
+
+```
+sudo nano {YOUR_HBA_FILE_LOCATION}
+```
+
+For the `local` unix socket connections row, change the `METHOD` is set to `md5` or `scram-sha-256` (better). It should look like this:
+
+```
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             all                                     scram-sha-256
+```
+
+Save the file, then restart the PostgreSQL server daemon:
+
+```
+sudo systemctl restart postgresql
+```
+
+### Manual Database Setup
+
+> [!NOTE]
+> Make sure you're in the project root directory.
+
+1. Login to `psql` as the `postgres` superuser and paste the following in the `psql` prompt.
+
+```
+\i scripts/setup.sql
+```
+
+2. Login as `stm_user` in the new database (password: `swordfish`).
+
+```
+\c cmps2212_stm stm_user
+```
+
+3. Create the tables.
+
+```
+\i scripts/tables.sql
+```
+
+4. Insert some initial data.
+
+```
+\i scripts/data.sql
+```
